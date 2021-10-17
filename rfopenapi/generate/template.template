@@ -1,0 +1,28 @@
+from rfopenapi import APICore
+
+class {{ class_name }}(APICore):
+{%- for endpoint in endpoints %}
+{{ endpoint.method_signature }}):
+{%- if endpoint.headers %}
+        headers = {
+{%- for param in endpoint.headers %}
+            "{{ param.name }}": {{ param.python_name }}{{ "," if not loop.last else "" }}
+{%- endfor %}
+        }
+{% endif %}
+{%- if endpoint.query %}
+        query = {
+{%- for param in endpoint.query %}
+            "{{ param.name }}": {{ param.python_name }}{{ "," if not loop.last else "" }}
+{%- endfor %}
+        }
+{% endif %}
+{%- if endpoint.body %}
+        body = {
+{%- for param in endpoint.body %}
+            "{{ param.name }}": {{ param.python_name }}{{ "," if not loop.last else "" }}
+{%- endfor %}
+        }
+{% endif %}
+        return self.{{ endpoint.http_method }}({{ "f" if "{" in endpoint.url else "" }}"{{ endpoint.url }}"{% if endpoint.headers %}, headers=headers{% endif %}{% if endpoint.query %}, query=query{% endif %}{% if endpoint.body %}, body=body{% endif %}, status=exp_status)
+{% endfor %}
