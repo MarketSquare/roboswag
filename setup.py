@@ -41,7 +41,12 @@ setup(
     keywords=KEYWORDS,
     packages=[PACKAGE],
     include_package_data=True,
-    install_requires=["robotframework>=3.2.2", "toml>=0.10.2"],
+    install_requires=[
+        "robotframework>=3.2.2",
+        "toml>=0.10.2",
+        "prance==0.21.8.*",
+        "requests==2.26.*",
+    ],
     extras_requires={
         "dev": ["pytest", "black"],
         # "doc": ["sphinx", "sphinx_rtd_theme"],
