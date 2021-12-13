@@ -15,13 +15,13 @@ from robot.libraries.BuiltIn import BuiltIn
 
 class MissingParameter(ValueError):
     def __init__(self, name):
-        super().__init__(f'Missing {name}. Set ${{{name}}} global variable or pass it as {name} named variable.')
+        super().__init__(f"Missing {name}. Set ${{{name}}} global variable or pass it as {name} named variable.")
 
 
 def get_from_kwargs_or_robot(kwargs, name, missing_ok=False):
     value = kwargs.get(name, None)
     if value is None:
-        value = BuiltIn().get_variable_value(f'${{{name}}}', None)
+        value = BuiltIn().get_variable_value(f"${{{name}}}", None)
     if not missing_ok and value is None:
         raise MissingParameter(name) from None
     return value

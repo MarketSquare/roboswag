@@ -1,6 +1,8 @@
-from rfopenapi import APICore
+from openapi import APIModel
 
-class {{ class_name }}(APICore):
+
+class {{ class_name }}(APIModel):
+{% if description %}    """Description: {{ description }}"""{% endif %}
 {%- for endpoint in endpoints %}
 {{ endpoint.method_signature }}):
 {%- if endpoint.headers %}
