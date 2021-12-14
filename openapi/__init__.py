@@ -1,17 +1,24 @@
 import requests
 import urllib3
 
-from rfopenapi.auth import TokenHandler
-from rfopenapi.logger import Logger
-from rfopenapi.version import __version__
-
+from openapi.auth import TokenHandler
+from openapi.logger import Logger
+from openapi.version import __version__
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 
 class APIModel:
-    def __init__(self, base_url, verify=False, headers=None, content_type="application/json", proxies=None,
-                 allow_redirects=True, authorization=TokenHandler):
+    def __init__(
+        self,
+        base_url,
+        verify=False,
+        headers=None,
+        content_type="application/json",
+        proxies=None,
+        allow_redirects=True,
+        authorization=TokenHandler,
+    ):
         # Set headers from init too (or reuse auth)
         self.base_url = base_url
         self.session = requests.Session()
@@ -20,7 +27,7 @@ class APIModel:
         if content_type is not None:
             self.session.headers = {"Content-Type": content_type}
         self.allow_redirects = allow_redirects
-        if proxies is not None:  # TODO urllib have autodetectr proxy - allow to use it
+        if proxies is not None:  # TODO urllib have autodetect proxy - allow to use it
             self.session.proxies.update(proxies)
         self.authorization = authorization
         self.logger = Logger()
@@ -35,8 +42,15 @@ class APIModel:
         if content_type is not None:
             headers["Content-Type"] = content_type
 
-        resp = self.session.request(method, url=self.base_url + url, headers=headers, json=body, params=query,
-                                    auth=auth, allow_redirects=self.allow_redirects)
+        resp = self.session.request(
+            method,
+            url=self.base_url + url,
+            headers=headers,
+            json=body,
+            params=query,
+            auth=auth,
+            allow_redirects=self.allow_redirects,
+        )
         # TODO quiet mode
         self.logger.log_request(resp)
         self.logger.log_response(resp)
@@ -45,6 +59,7 @@ class APIModel:
         return resp
 
     def post(self, *args, **kwargs):
+        # TODO handle files upload
         return self.send_request("POST", *args, **kwargs)
 
     def get(self, *args, **kwargs):

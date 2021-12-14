@@ -1,6 +1,6 @@
 import argparse
 
-from rfopenapi.generate.generate import generate
+from openapi.generate.generate import generate
 
 
 def generate_cli():
