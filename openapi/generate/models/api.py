@@ -1,42 +1,21 @@
-import datetime
 from collections import defaultdict
 from typing import Dict
 
 import yaml
 
+from openapi.generate.models.definition import Definition, Property
 from openapi.generate.models.endpoint import Endpoint
 from openapi.generate.models.parameter import Parameter
 from openapi.generate.models.tag import Tag
-from openapi.generate.utils import pythonify_name
+from openapi.generate.models.utils import get_python_type
+from openapi.generate.models.utils import pythonify_name
 
 
 class APIModel:
-    types_mapping = {
-        "string": {
-            "": str,
-            "byte": str,
-            "password": str,
-            "date": datetime.date,
-            "date-time": datetime.datetime,
-            "binary": bytes,
-        },
-        "integer": {
-            "": int,
-            "int32": int,
-            "int64": int,
-        },
-        "number": {
-            "float": float,
-            "double": float,
-        },
-        "boolean": bool,
-        "file": "file",
-        "array": list(),
-    }
-
     def __init__(self, name: str) -> None:
         self.name: str = name
         self.tags: Dict[str, Tag] = {}
+        self.definitions: Dict[str, Definition] = {}
 
     @classmethod
     def from_swagger(cls, source):
@@ -59,7 +38,7 @@ class APIModel:
                         Parameter(
                             param["name"],
                             default="None" if param["in"] != "path" else None,  # TODO Retrieve default value
-                            param_type=api_model.get_python_type(param["type"], param.get("format"))
+                            param_type=get_python_type(param["type"], param.get("format"))
                             if param.get("type", None)
                             else None,
                         )
@@ -82,18 +61,22 @@ class APIModel:
             if tag_name in api_model.tags:
                 api_model.tags[tag_name].description = tag["description"]
 
+        for def_name, def_body in data["definitions"].items():
+            def_type = def_body.get("type", "")
+            properties = []
+            for prop_name, prop_body in def_body.get("properties", []).items():
+                prop_type = prop_body.get("type", "")
+                prop_format = prop_body.get("format", "")
+                properties.append(
+                    Property(prop_name, prop_type=get_python_type(prop_type, prop_format))
+                )
+
+            definition = Definition(def_name, def_type=def_type, properties=properties)
+            api_model.definitions[def_name] = definition
+
         return api_model
 
     def add_endpoint_to_tag(self, tag: str, endpoint: Endpoint) -> None:
         if tag not in self.tags:
             self.tags[tag] = Tag(tag)
         self.tags[tag].endpoints.append(endpoint)
-
-    def get_python_type(self, param_type, param_format=None):
-        if not self.types_mapping[param_type]:
-            return str
-        if not isinstance(self.types_mapping[param_type], Dict):
-            return self.types_mapping[param_type]
-        if param_format:
-            return self.types_mapping[param_type][param_format]
-        return str

@@ -4,6 +4,9 @@ from typing import Optional
 from jinja2 import Template
 
 from openapi.generate.models.api import APIModel
+from openapi.generate.models.definition import Definition
+
+import black
 
 
 def generate(source, output: Optional[Path] = None):
@@ -20,4 +23,15 @@ def generate(source, output: Optional[Path] = None):
             )
         with open(Path(output_dir, f"{tag.name}.py"), "w") as f:
             f.write(template)
-        print(f"Generated {output_dir}/{tag.name} file")
+        print(f"Generated '{output_dir}\\{tag.name}' file")
+    definition: Definition
+    for definition in api_model.definitions.values():
+        defs_dir = Path(output_dir) / Path("definitions")
+        Path(defs_dir).mkdir(exist_ok=True)
+        with open(Path(parent_dir, "definitions.template")) as f:
+            template = Template(f.read()).render(
+                class_name=definition.name, properties=definition.properties
+            )
+        with open(Path(defs_dir, f"{definition.name}.py"), "w") as f:
+            f.write(template)
+        print(f"Generated '{defs_dir}\\{definition.name}' file")
