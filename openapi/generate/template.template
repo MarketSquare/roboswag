@@ -2,9 +2,14 @@ from openapi import APIModel
 
 
 class {{ class_name }}(APIModel):
-{% if description %}    """Description: {{ description }}"""{% endif %}
+{% if description %}    """Description: {{ description }}"""
+{% endif %}
 {%- for endpoint in endpoints %}
 {{ endpoint.method_signature }}):
+{% if (endpoint.summary or endpoint.description) %}        """{% if endpoint.summary %}
+        {{ endpoint.summary }}{% endif %}{% if endpoint.description %}
+        {{ endpoint.description }}{% endif %}
+        """{% endif %}
 {%- if endpoint.headers %}
         headers = {
 {%- for param in endpoint.headers %}

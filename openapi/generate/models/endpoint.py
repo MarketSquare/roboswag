@@ -10,6 +10,8 @@ class Endpoint:
         method_name: str,
         http_method,
         url,
+        summary: str,
+        description: str,
         path_params: List[Parameter],
         headers: List[Parameter],
         query: List[Parameter],
@@ -18,6 +20,8 @@ class Endpoint:
         self.method_name: str = method_name
         self.http_method = http_method
         self.url = self.prepare_path(url, path_params)
+        self.summary: str = summary
+        self.description: str = description
         self.path_params: List[Parameter] = path_params
         self.headers: List[Parameter] = headers
         self.query: List[Parameter] = query
