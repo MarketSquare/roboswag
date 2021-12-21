@@ -18,7 +18,7 @@ def generate_cli():
 
 def run_openapi():
     generate_cli()
-    parser = ResolvingParser("swagger.json")
+    parser = ResolvingParser("openapi/swagger.json")
     parser.specification
 
 

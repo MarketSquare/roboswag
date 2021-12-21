@@ -2,10 +2,11 @@ from openapi.generate.utils import pythonify_name
 
 
 class Parameter:
-    def __init__(self, name: str, default=None) -> None:
+    def __init__(self, name: str, default=None, param_type=None) -> None:
         self.name: str = name
         self.python_name: str = pythonify_name(name)
         self.default = default
+        self.param_type = param_type
 
     def __str__(self):
         if self.default is None:
