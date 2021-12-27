@@ -1,12 +1,12 @@
 """
 You can use your own auth class when defining your API endpoint handler:
     from webapi.auth import HTTPBasicAuth
-    
+
     class SomeAPI(APICore):
         def __init__(self, base_url, *args, **kwargs):
             super().__init__(base_url, *args, authorization=HTTPBasicAuth, **kwargs)
 
-See https://copdips.com/2019/04/creating-custom-python-request-auth-class.html for example how you can 
+See https://copdips.com/2019/04/creating-custom-python-request-auth-class.html for example how you can
 define custom auth classes.
 """
 from requests.auth import HTTPBasicAuth
@@ -28,7 +28,7 @@ def get_from_kwargs_or_robot(kwargs, name, missing_ok=False):
 
 
 class TokenHandler:
-    def __init__(self, **kwargs):  # TODO can use access_token directly
+    def __init__(self, **kwargs):
         self.access_token = get_from_kwargs_or_robot(kwargs, "access_token")
 
     def __call__(self, *args, **kwargs):

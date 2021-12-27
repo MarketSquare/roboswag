@@ -20,4 +20,4 @@ class Logger:
 
     @staticmethod
     def log_response(response):
-        logger.info(f"{response.request.method.upper()} response: {response.status_code} {response.text}")  # TODO
+        logger.info(f"{response.request.method.upper()} response: {response.status_code} {response.text}")

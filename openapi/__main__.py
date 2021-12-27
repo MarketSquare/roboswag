@@ -1,8 +1,6 @@
 import argparse
 import sys
 
-from prance import ResolvingParser
-
 from openapi.generate.generate import generate
 
 
@@ -18,8 +16,6 @@ def generate_cli():
 
 def run_openapi():
     generate_cli()
-    parser = ResolvingParser("openapi/swagger.json")
-    parser.specification
 
 
 if __name__ == "__main__":
