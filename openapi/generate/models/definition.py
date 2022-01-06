@@ -10,7 +10,8 @@ class Property:
 
 
 class Definition:
-    def __init__(self, name: str, def_type, properties: List[Property]):
+    def __init__(self, name: str, def_type, properties: List[Property], required=None):
         self.name: str = name
         self.type = get_python_type(def_type)
+        self.required = required
         self.properties: List[Property] = properties

@@ -16,9 +16,9 @@ def generate(source, output: Optional[Path] = None):
     Path(output_dir).mkdir(exist_ok=True)
     for tag in api_model.tags.values():
         parent_dir = Path(__file__).parent
-        with open(Path(parent_dir, "templates/template.template")) as f:
+        with open(Path(parent_dir, "templates/paths.template")) as f:
             template = Template(f.read()).render(
-                class_name=tag.name, endpoints=tag.endpoints, description=tag.description
+                class_name=tag.name, endpoints=tag.endpoints, description=tag.description, schemas=api_model.definitions
             )
         with open(Path(output_dir, f"{tag.name}.py"), "w") as f:
             f.write(template)

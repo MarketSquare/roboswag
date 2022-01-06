@@ -7,6 +7,7 @@ from prance import ResolvingParser
 from openapi.generate.models.definition import Definition, Property
 from openapi.generate.models.endpoint import Endpoint
 from openapi.generate.models.parameter import Parameter
+from openapi.generate.models.response import Response
 from openapi.generate.models.tag import Tag
 from openapi.generate.models.utils import get_python_type
 from openapi.generate.models.utils import pythonify_name
@@ -44,10 +45,21 @@ class APIModel:
                             param["name"],
                             default="None" if param["in"] != "path" else None,  # TODO Retrieve default value
                             param_type=get_python_type(param["type"], param.get("format"))
-                            if param.get("type", None)
+                            if param.get("type")
                             else None,
+                            description=param.get("description"),
+                            required=param.get("required"),
+                            schema=param.get("schema"),
                         )
                     )
+                responses = dict()
+                for status_code, resp in method_body.get("responses", []).items():
+                    responses[status_code] = Response(
+                        description=resp.get("description"),
+                        headers=resp.get("headers"),
+                        schema=resp.get("schema"),
+                    )
+
                 endpoint = Endpoint(
                     unique_name,
                     method,
@@ -58,6 +70,7 @@ class APIModel:
                     headers=params["header"],
                     query=params["query"],
                     body=params["body"],
+                    responses=responses,
                 )
                 self.add_endpoint_to_tag(tag_name, endpoint)
 
@@ -75,15 +88,14 @@ class APIModel:
     def parse_definitions(self, swagger):
         for def_name, def_body in swagger["definitions"].items():
             def_type = def_body.get("type", "")
+            def_req = def_body.get("required")
             properties = []
             for prop_name, prop_body in def_body.get("properties", []).items():
                 prop_type = prop_body.get("type", "")
                 prop_format = prop_body.get("format", "")
-                properties.append(
-                    Property(prop_name, prop_type=get_python_type(prop_type, prop_format))
-                )
+                properties.append(Property(prop_name, prop_type=get_python_type(prop_type, prop_format)))
 
-            definition = Definition(def_name, def_type=def_type, properties=properties)
+            definition = Definition(def_name, def_type=def_type, properties=properties, required=def_req)
             self.definitions[def_name] = definition
 
 

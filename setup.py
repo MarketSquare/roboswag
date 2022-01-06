@@ -50,6 +50,7 @@ setup(
         "prance>=0.21.8",
         "toml>=0.10.2",
         "openapi-spec-validator>=0.3",
+        "jsonschema>=4.2.1",
     ],
     extras_requires={
         "dev": ["pytest", "black", "isort"],

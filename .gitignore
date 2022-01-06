@@ -86,5 +86,10 @@ ENV/
 env.bak/
 venv.bak/
 
-PyCharm project files
+# PyCharm project files
 .idea/
+
+# Robot files
+log.html
+report.html
+output.xml

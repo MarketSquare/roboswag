@@ -1,7 +1,8 @@
 from itertools import chain
-from typing import List
+from typing import List, Dict
 
 from openapi.generate.models.parameter import Parameter
+from openapi.generate.models.response import Response
 
 
 class Endpoint:
@@ -16,6 +17,8 @@ class Endpoint:
         headers: List[Parameter],
         query: List[Parameter],
         body: List[Parameter],
+        responses: Dict[str, Response],
+        exp_status: str = '200',
     ):
         self.method_name: str = method_name
         self.http_method = http_method
@@ -26,6 +29,8 @@ class Endpoint:
         self.headers: List[Parameter] = headers
         self.query: List[Parameter] = query
         self.body: List[Parameter] = body
+        self.responses: Dict[str, Response] = responses
+        self.exp_status = exp_status
         self.method_signature: str = self.get_python_method_signature()
 
     @staticmethod
@@ -37,7 +42,8 @@ class Endpoint:
     def get_python_method_signature(self) -> str:
         max_line_length: int = 120
         args = [str(param) for param in chain(self.path_params, self.headers, self.query, self.body)]
-        args.append("exp_status=200")  # TODO handle different status codes & reading them from swagger
+        args.append(f"exp_status={self.exp_status}")  # TODO handle different status codes & reading them from swagger
+        args.append(f"validate_schema=True")
         line = f"    def {self.method_name}(self"
         prefix = len(line) - 4
         last_index = len(args) - 1

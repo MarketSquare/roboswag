@@ -48,7 +48,7 @@ class APIModel:
             headers=headers,
             json=body,
             params=query,
-            auth=auth,
+           # auth=auth,
             allow_redirects=self.allow_redirects,
         )
         # TODO quiet mode
