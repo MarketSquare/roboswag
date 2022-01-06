@@ -19,9 +19,9 @@ class MissingParameter(ValueError):
 
 
 def get_from_kwargs_or_robot(kwargs, name, missing_ok=False):
-    value = kwargs.get(name, None)
+    value = kwargs.get(name)
     if value is None:
-        value = BuiltIn().get_variable_value(f"${{{name}}}", None)
+        value = BuiltIn().get_variable_value(f"${{{name}}}")
     if not missing_ok and value is None:
         raise MissingParameter(name) from None
     return value
