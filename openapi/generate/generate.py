@@ -1,3 +1,4 @@
+import json
 from pathlib import Path
 from typing import Optional
 
@@ -8,30 +9,67 @@ from openapi.generate.models.definition import Definition
 
 
 def generate(source, output: Optional[Path] = None):
-    # TODO: Add API module init file with details from API info as docstring
-    api_model = APIModelCreator.from_prance(source)
+    api_model, swagger = APIModelCreator.from_prance(source)
     output_dir = api_model.name
     if output is not None:
         output_dir = output / output_dir
     Path(output_dir).mkdir(exist_ok=True)
-    for tag in api_model.tags.values():
-        parent_dir = Path(__file__).parent
-        with open(Path(parent_dir, "templates/paths.template")) as f:
+
+    generate_init(swagger, output_dir)
+
+    generate_endpoints(api_model.tags, output_dir)
+
+    models_dir = Path(output_dir) / Path("models")
+    generate_models(api_model.definitions, models_dir)
+
+    schema_dir = Path(output_dir) / Path("schemas")
+    generate_schemas(swagger, schema_dir)
+
+
+def generate_init(swagger, output_dir):
+    parent_dir = Path(__file__).parent
+    Path(output_dir).mkdir(exist_ok=True)
+    swagger_version = swagger.get("openapi") or swagger.get("swagger")
+    with open(Path(parent_dir, "templates/api_init.jinja")) as f:
+        template = Template(f.read()).render(swagger_version=swagger_version, infos=swagger["info"])
+    with open(Path(output_dir, f"__init__.py"), "w") as f:
+        f.write(template)
+    print(f"Generated '{output_dir}\\__init__.py' file")
+
+
+def generate_endpoints(tags, output_dir):
+    parent_dir = Path(__file__).parent
+    Path(output_dir).mkdir(exist_ok=True)
+    for tag in tags.values():
+        with open(Path(parent_dir, "templates/paths.jinja")) as f:
             template = Template(f.read()).render(
-                class_name=tag.name, endpoints=tag.endpoints, description=tag.description, schemas=api_model.definitions
+                class_name=tag.name,
+                endpoints=tag.endpoints,
+                description=tag.description,
             )
         with open(Path(output_dir, f"{tag.name}.py"), "w") as f:
             f.write(template)
-        print(f"Generated '{output_dir}\\{tag.name}' file")
+        print(f"Generated '{output_dir}\\{tag.name}.py' file")
 
+
+def generate_models(definitions, output_dir):
+    parent_dir = Path(__file__).parent
+    Path(output_dir).mkdir(exist_ok=True)
     definition: Definition
-    for definition in api_model.definitions.values():
-        defs_dir = Path(output_dir) / Path("schemas")
-        Path(defs_dir).mkdir(exist_ok=True)
-        with open(Path(parent_dir, "templates/definitions.template")) as f:
-            template = Template(f.read()).render(
-                class_name=definition.name, properties=definition.properties
-            )
-        with open(Path(defs_dir, f"{definition.name}.py"), "w") as f:
+    for definition in definitions.values():
+        Path(output_dir).mkdir(exist_ok=True)
+        with open(Path(parent_dir, "templates/models.jinja")) as f:
+            template = Template(f.read()).render(class_name=definition.name, properties=definition.properties)
+        with open(Path(output_dir, f"{definition.name}.py"), "w") as f:
             f.write(template)
-        print(f"Generated '{defs_dir}\\{definition.name}' file")
+        print(f"Generated '{output_dir}\\{definition.name}.py' file")
+
+
+def generate_schemas(swagger, output_dir):
+    Path(output_dir).mkdir(exist_ok=True)
+    for schema_name, schema in swagger["definitions"].items():
+        Path(output_dir).mkdir(exist_ok=True)
+        with open(Path(output_dir, f"{schema_name}.py"), "w") as f:
+            f.write(json.dumps(schema))
+            f.write("\n")
+        print(f"Generated '{output_dir}\\{schema_name}.py' file")

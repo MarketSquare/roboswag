@@ -3,6 +3,7 @@ from typing import Dict
 
 import yaml
 from prance import ResolvingParser
+from prance.convert import convert_spec
 
 from openapi.generate.models.definition import Definition, Property
 from openapi.generate.models.endpoint import Endpoint
@@ -101,17 +102,21 @@ class APIModel:
 
 class APIModelCreator:
     @staticmethod
-    def from_swagger(source):
+    def from_yaml(source):
         with open(source) as f:
             data = yaml.load(f, Loader=yaml.Loader)
         api_model = APIModel()
         api_model.parse_swagger(data)
-        return api_model
+        return api_model, data
 
     @staticmethod
-    def from_prance(source):
+    def from_prance(source, convert_to_3=False):
+        # TODO: support for swagger 3.0 (https://swagger.io/specification/)
         parser = ResolvingParser(source)
         swagger = parser.specification
+        # convert to OpenAPI 3.x if swagger is in version 2.x
+        if swagger.get("swagger") and convert_to_3:
+            swagger = convert_spec(swagger).specification
         api_model = APIModel()
         api_model.parse_swagger(swagger)
-        return api_model
+        return api_model, swagger

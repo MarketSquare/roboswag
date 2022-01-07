@@ -18,7 +18,7 @@ class Endpoint:
         query: List[Parameter],
         body: List[Parameter],
         responses: Dict[str, Response],
-        exp_status: str = '200',
+        exp_status: str = "200",
     ):
         self.method_name: str = method_name
         self.http_method = http_method
@@ -42,7 +42,7 @@ class Endpoint:
     def get_python_method_signature(self) -> str:
         max_line_length: int = 120
         args = [str(param) for param in chain(self.path_params, self.headers, self.query, self.body)]
-        args.append(f"exp_status={self.exp_status}")  # TODO handle different status codes & reading them from swagger
+        args.append(f"exp_status={self.exp_status}")
         args.append(f"validate_schema=True")
         line = f"    def {self.method_name}(self"
         prefix = len(line) - 4

@@ -1,0 +1,15 @@
+"""
+**OpenAPI version:** {{ swagger_version }}
+**Title:** {{ infos["title"] }}
+**API Version:** {{ infos["version"] }}
+{% if infos.get("description") %}**Description:** {{ infos["description"] }}{% endif %}
+{% if infos.get("termsOfService") %}**Terms of Service:** {{ infos["termsOfService"] }}{% endif %}
+{% if infos.get("contact") %}**Contact:**
+{%- for key, value in infos["contact"].items() %}
+    **{{ key }}:** {{ value }}
+{%- endfor %}{% endif %}
+{% if infos.get("license") %}**License:**
+{%- for key, value in infos["license"].items() %}
+    **{{ key }}:** {{ value }}
+{%- endfor %}{% endif %}
+"""
