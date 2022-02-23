@@ -60,7 +60,7 @@ class APIModel:
                         headers=resp.get("headers"),
                         schema=resp.get("schema"),
                     )
-
+                body = params["body"][0] if params["body"] else None
                 endpoint = Endpoint(
                     unique_name,
                     method,
