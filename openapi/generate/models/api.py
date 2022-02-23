@@ -70,12 +70,14 @@ class APIModel:
                     path_params=params["path"],
                     headers=params["header"],
                     query=params["query"],
-                    body=params["body"],
+                    body=body,
                     responses=responses,
                 )
                 self.add_endpoint_to_tag(tag_name, endpoint)
 
     def parse_tags(self, swagger):
+        if not swagger.get("tags"):
+            return
         for tag in swagger["tags"]:
             tag_name = Tag.normalize_tag_name(tag["name"])
             if tag_name in self.tags:
