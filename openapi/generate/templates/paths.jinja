@@ -25,6 +25,8 @@ class {{ class_name }}(APIModel):
             "{{ param.name }}": {{ param.python_name }}{{ "," if not loop.last else "" }}
 {%- endfor %}
         }
+        if overwrite_headers:
+            headers = overwrite_headers
 {% endif %}
 {%- if endpoint._query %}
         _query = {
@@ -32,6 +34,8 @@ class {{ class_name }}(APIModel):
             "{{ param.name }}": {{ param.python_name }}{{ "," if not loop.last else "" }}
 {%- endfor %}
         }
+        if overwrite_query:
+            _query = overwrite_query
 {% endif %}
 {%- if endpoint._body %}
         if validate_payload:
