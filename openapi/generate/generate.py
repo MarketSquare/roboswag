@@ -22,8 +22,8 @@ def generate(source, output: Optional[Path] = None):
     models_dir = Path(output_dir) / Path("models")
     generate_models(api_model.definitions, models_dir)
 
-    schema_dir = Path(output_dir) / Path("schemas")
-    generate_schemas(swagger, schema_dir)
+    schemas_dir = Path(output_dir) / Path("schemas")
+    generate_schemas(swagger, schemas_dir)
 
 
 def generate_init(swagger, output_dir):
@@ -40,6 +40,7 @@ def generate_init(swagger, output_dir):
 def generate_endpoints(tags, output_dir):
     parent_dir = Path(__file__).parent
     Path(output_dir).mkdir(exist_ok=True)
+    print("Generating endpoints...")
     for tag in tags.values():
         with open(Path(parent_dir, "templates/paths.jinja")) as f:
             template = Template(f.read()).render(
@@ -56,6 +57,7 @@ def generate_models(definitions, output_dir):
     parent_dir = Path(__file__).parent
     Path(output_dir).mkdir(exist_ok=True)
     definition: Definition
+    print("Generating models...")
     for definition in definitions.values():
         Path(output_dir).mkdir(exist_ok=True)
         with open(Path(parent_dir, "templates/models.jinja")) as f:
@@ -67,9 +69,10 @@ def generate_models(definitions, output_dir):
 
 def generate_schemas(swagger, output_dir):
     Path(output_dir).mkdir(exist_ok=True)
+    print("Generating schemas...")
     for schema_name, schema in swagger["definitions"].items():
         Path(output_dir).mkdir(exist_ok=True)
-        with open(Path(output_dir, f"{schema_name}.py"), "w") as f:
+        with open(Path(output_dir, f"{schema_name}.json"), "w") as f:
             f.write(json.dumps(schema))
             f.write("\n")
-        print(f"Generated '{output_dir}\\{schema_name}.py' file")
+        print(f"Generated '{output_dir}\\{schema_name}.json' file")

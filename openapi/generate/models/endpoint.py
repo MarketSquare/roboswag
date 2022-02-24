@@ -16,7 +16,7 @@ class Endpoint:
         path_params: List[Parameter],
         headers: List[Parameter],
         query: List[Parameter],
-        body: List[Parameter],
+        body: Parameter,
         responses: Dict[str, Response],
         exp_status: str = "200",
     ):
@@ -28,7 +28,7 @@ class Endpoint:
         self.path_params: List[Parameter] = path_params
         self.headers: List[Parameter] = headers
         self.query: List[Parameter] = query
-        self.body: List[Parameter] = body
+        self.body: Parameter = body
         self.responses: Dict[str, Response] = responses
         self.exp_status = exp_status
         self.method_signature: str = self.get_python_method_signature()
@@ -41,7 +41,9 @@ class Endpoint:
 
     def get_python_method_signature(self) -> str:
         max_line_length: int = 120
-        args = [str(param) for param in chain(self.path_params, self.headers, self.query, self.body)]
+        args = [str(param) for param in chain(self.path_params, self.headers, self.query) if param]
+        if self.body:
+            args.append(f"{self.body}")
         args.append(f"exp_status={self.exp_status}")
         args.append(f"validate_schema=True")
         line = f"    def {self.method_name}(self"

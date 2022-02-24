@@ -13,7 +13,7 @@ class {{ class_name }}(APIModel):
     def __init__(self, url):
         super().__init__(base_url=url)
 {% for endpoint in endpoints %}
-{{ endpoint.method_signature }}{% if endpoint.body %}, validate_payload=True{% endif %}):
+{{ endpoint.method_signature }}{% if endpoint.body %}, validate_payload=True, overwrite_body=None{% endif %}{% if endpoint.headers %}, overwrite_headers=None{% endif %}{% if endpoint.query %}, overwrite_query=None{% endif %}):
 {% if (endpoint.summary or endpoint.description) %}        """{% if endpoint.summary %}
         **Summary:** {{ endpoint.summary }}{% endif %}{% if endpoint.description %}
 
@@ -25,33 +25,34 @@ class {{ class_name }}(APIModel):
             "{{ param.name }}": {{ param.python_name }}{{ "," if not loop.last else "" }}
 {%- endfor %}
         }
+        if overwrite_headers:
+            headers = overwrite_headers
 {% endif %}
 {%- if endpoint.query %}
-        query = {
+        _query = {
 {%- for param in endpoint.query %}
             "{{ param.name }}": {{ param.python_name }}{{ "," if not loop.last else "" }}
 {%- endfor %}
         }
+        if overwrite_query:
+            _query = overwrite_query
 {% endif %}
 {%- if endpoint.body %}
         if validate_payload:
-        {%- for param in endpoint.body %}
-        {%- if param.schema %}
+        {%- if endpoint.body.schema %}
             try:
-                schema = {{ param.schema }}
+                schema = {{ endpoint.body.schema }}
                 validate(instance=json.loads(body), schema=schema)
             except jsonschema.exceptions.ValidationError as err:
                 raise err
         {%- endif %}
-        {%- endfor %}
 
-        body = {
-{%- for param in endpoint.body %}
-            "{{ param.name }}": {{ param.python_name }}{{ "," if not loop.last else "" }}
-{%- endfor %}
-        }
+        _body = {{ endpoint.body.python_name }}
+
+        if overwrite_body:
+            _body = overwrite_body
 {% endif %}
-        response = self.{{ endpoint.http_method }}({{ "f" if "{" in endpoint.url else "" }}"{{ endpoint.url }}"{% if endpoint.headers %}, headers=headers{% endif %}{% if endpoint.query %}, query=query{% endif %}{% if endpoint.body %}, body=body{% endif %}, status=exp_status)
+        response = self.{{ endpoint.http_method }}({{ "f" if "{" in endpoint.url else "" }}"{{ endpoint.url }}"{% if endpoint.headers %}, headers=headers{% endif %}{% if endpoint.query %}, query=_query{% endif %}{% if endpoint.body %}, body=_body{% endif %}, status=exp_status)
 
         if validate_schema:{% for status_code, resp in endpoint.responses.items() %}
         {%- if resp.schema %}
@@ -64,19 +65,15 @@ class {{ class_name }}(APIModel):
         {%- elif status_code != "default" %}
             {% if not loop.first %}el{% endif %}if response.status_code == {{ status_code }}:
                 expected_text = "{{ resp.description }}"
-                logging.info(
-                    f"Asserting response description:\n    '{response.text}'\n"
-                    f"equals expected:\n    '{expected_text}'"
-                )
-                assert response.text == expected_text
+                assertion_err_msg = f"Received response description:\n    '{response.text}'\n" \
+                                    f"does not equal expected:\n    '{expected_text}'"
+                assert response.text == expected_text, assertion_err_msg
         {%- else %}
             {% if not loop.first %}el{% endif %}if response.status_code == "default":
                 expected_text = "{{ resp.description }}"
-                logging.info(
-                    f"Asserting response description:\n    '{response.text}'\n"
-                    f"equals expected:\n    '{expected_text}'"
-                )
-                assert response.text == expected_text
+                assertion_err_msg = f"Received response description:\n    '{response.text}'\n" \
+                                    f"does not equal expected:\n    '{expected_text}'"
+                assert response.text == expected_text, assertion_err_msg
         {%- endif %}{% endfor %}
             else:
                 logging.error(f"Received status code ({response.status_code}) is not expected by the API specification")
