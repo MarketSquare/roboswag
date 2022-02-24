@@ -41,7 +41,7 @@ class Endpoint:
 
     def get_python_method_signature(self) -> str:
         max_line_length: int = 120
-        args = [str(param) for param in chain(self.path_params, self.headers, self.query)]
+        args = [str(param) for param in chain(self.path_params, self.headers, self.query) if param]
         if self.body:
             args.append(f"{self.body}")
         args.append(f"exp_status={self.exp_status}")
