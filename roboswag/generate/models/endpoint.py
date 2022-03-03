@@ -1,8 +1,8 @@
 from itertools import chain
 from typing import List, Dict
 
-from openapi.generate.models.parameter import Parameter
-from openapi.generate.models.response import Response
+from roboswag.generate.models.parameter import Parameter
+from roboswag.generate.models.response import Response
 
 
 class Endpoint:

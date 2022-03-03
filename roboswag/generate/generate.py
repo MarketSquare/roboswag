@@ -4,8 +4,8 @@ from typing import Optional
 
 from jinja2 import Template
 
-from openapi.generate.models.api import APIModelCreator
-from openapi.generate.models.definition import Definition
+from roboswag.generate.models.api import APIModelCreator
+from roboswag.generate.models.definition import Definition
 
 
 def generate(source, output: Optional[Path] = None):
@@ -17,7 +17,8 @@ def generate(source, output: Optional[Path] = None):
 
     generate_init(swagger, output_dir)
 
-    generate_endpoints(api_model.tags, output_dir)
+    endpoints_dir = Path(output_dir) / Path("endpoints")
+    generate_endpoints(api_model.tags, endpoints_dir)
 
     models_dir = Path(output_dir) / Path("models")
     generate_models(api_model.definitions, models_dir)

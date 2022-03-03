@@ -1,6 +1,6 @@
 from typing import List
 
-from openapi.generate.models.endpoint import Endpoint
+from roboswag.generate.models.endpoint import Endpoint
 
 
 class Tag:

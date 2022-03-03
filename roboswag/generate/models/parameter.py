@@ -1,4 +1,4 @@
-from openapi.generate.models.utils import pythonify_name
+from roboswag.generate.models.utils import pythonify_name
 
 
 class Parameter:

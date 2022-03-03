@@ -1,9 +1,10 @@
 import requests
 import urllib3
 
-from openapi.auth import TokenHandler
-from openapi.logger import Logger
-from openapi.version import __version__
+from roboswag.auth import TokenHandler
+from roboswag.logger import Logger
+from roboswag.version import __version__
+from roboswag.__main__ import run_roboswag
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -37,7 +38,7 @@ class APIModel:
     def send_request(self, method, url, status=None, headers=None, body=None, query=None, **kwargs):
         headers = self.trim_empty(headers)
         query = self.trim_empty(query)
-        auth = self.authorization(**kwargs) if self.authorization is not None else None
+        # auth = self.authorization(**kwargs) if self.authorization is not None else None
         content_type = kwargs.get("content-type", self.content_type)
         if content_type is not None:
             headers["Content-Type"] = content_type
