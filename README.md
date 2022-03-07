@@ -21,7 +21,7 @@ The OpenAPI Specification (OAS) defines a standard, language-agnostic interface 
 Click [here for v3 documentation](https://swagger.io/specification/) and
 [here for v2 documentation](https://swagger.io/specification/v2).
 
-> Hosted on [GitHub](https://github.com/bhirsz/robotframework-openapi). :medal_military:
+> Hosted on [GitHub](https://github.com/bhirsz/roboswag). :medal_military:
 
 Usage <a name="usage"></a>
 -----
@@ -29,7 +29,7 @@ Usage <a name="usage"></a>
 First, you need to install Roboswag. The PyPI package is not yet released, so if you want to try it out 
 you need to clone the repository and install the tool from source code.
 
-After you have the repository locally, go inside the main directory `robotframework-roboswag` and type:
+After you have the repository locally, go inside the main directory `roboswag` and type:
 
 ```commandline
 pip install .
