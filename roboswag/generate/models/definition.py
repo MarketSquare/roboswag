@@ -1,6 +1,6 @@
 from typing import List
 
-from openapi.generate.models.utils import get_python_type, pythonify_name
+from roboswag.generate.models.utils import get_python_type, pythonify_name
 
 
 class Property:

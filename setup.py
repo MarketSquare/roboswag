@@ -2,19 +2,20 @@ import pathlib
 
 from setuptools import setup
 
-PACKAGE = "openapi"
+PACKAGE = "roboswag"
 HERE = pathlib.Path(__file__).parent
 README = (HERE / "README.md").read_text()
 with open(HERE / PACKAGE / "version.py") as f:
     __version__ = f.read().split("=")[1].strip().strip('"')
 CLASSIFIERS = """
-Development Status :: 2 - Pre-Alpha
+Development Status :: 3 - Alpha
 License :: OSI Approved :: Apache Software License
 Operating System :: OS Independent
 Programming Language :: Python
 Programming Language :: Python :: 3.7
 Programming Language :: Python :: 3.8
 Programming Language :: Python :: 3.9
+Programming Language :: Python :: 3.10
 Framework :: Robot Framework
 Framework :: Robot Framework :: Tool
 Topic :: Software Development :: Testing
@@ -22,8 +23,8 @@ Topic :: Software Development :: Quality Assurance
 Topic :: Utilities
 Intended Audience :: Developers
 """.strip().splitlines()
-KEYWORDS = "robotframework automation testautomation testing qa"
-DESCRIPTION = "Test framework for API with usage of Robot Framework"
+KEYWORDS = "automation api testautomation testing qa robotframework"
+DESCRIPTION = "Test framework for auto-generating libraries from OpenAPI specification file"
 
 setup(
     name=f"robotframework-{PACKAGE}",
@@ -55,5 +56,5 @@ setup(
     extras_requires={
         "dev": ["pytest", "black", "isort"],
     },
-    entry_points={"console_scripts": [f"{PACKAGE}={PACKAGE}:run_openapi"]},
+    entry_points={"console_scripts": [f"{PACKAGE}={PACKAGE}:run_roboswag"]},
 )

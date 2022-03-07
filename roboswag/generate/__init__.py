@@ -1,6 +1,6 @@
 import argparse
 
-from openapi.generate.generate import generate
+from roboswag.generate.generate import generate
 
 
 def generate_cli():

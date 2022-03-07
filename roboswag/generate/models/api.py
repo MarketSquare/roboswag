@@ -5,13 +5,13 @@ import yaml
 from prance import ResolvingParser
 from prance.convert import convert_spec
 
-from openapi.generate.models.definition import Definition, Property
-from openapi.generate.models.endpoint import Endpoint
-from openapi.generate.models.parameter import Parameter
-from openapi.generate.models.response import Response
-from openapi.generate.models.tag import Tag
-from openapi.generate.models.utils import get_python_type
-from openapi.generate.models.utils import pythonify_name
+from roboswag.generate.models.definition import Definition, Property
+from roboswag.generate.models.endpoint import Endpoint
+from roboswag.generate.models.parameter import Parameter
+from roboswag.generate.models.response import Response
+from roboswag.generate.models.tag import Tag
+from roboswag.generate.models.utils import get_python_type
+from roboswag.generate.models.utils import pythonify_name
 
 
 class APIModel:
@@ -35,7 +35,7 @@ class APIModel:
             method: str
             method_body: Dict
             for method, method_body in path_body.items():
-                tag_name = method_body["tags"][0].strip(" -_").title() + "API"  # TODO configurable class name
+                tag_name = method_body["tags"][0].strip(" -_").title()  # TODO configurable class name
                 unique_name = pythonify_name(method_body["operationId"])  # TODO fallback since its optional
                 summary = method_body.get("summary", "")
                 description = method_body.get("description", "")
