@@ -43,6 +43,7 @@ setup(
     packages=[PACKAGE],
     include_package_data=True,
     install_requires=[
+        "black>=22.3",
         "robotframework>=4.1",
         "requests>=2.26",
         "urllib3>=1.26",
