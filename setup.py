@@ -23,7 +23,7 @@ Topic :: Software Development :: Quality Assurance
 Topic :: Utilities
 Intended Audience :: Developers
 """.strip().splitlines()
-KEYWORDS = "automation api testautomation testing qa openapi"
+KEYWORDS = "automation api testautomation testing qa openapi robotframework"
 DESCRIPTION = "Test framework for auto-generating libraries from OpenAPI specification file"
 
 setup(
