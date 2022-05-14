@@ -23,17 +23,17 @@ Topic :: Software Development :: Quality Assurance
 Topic :: Utilities
 Intended Audience :: Developers
 """.strip().splitlines()
-KEYWORDS = "automation api testautomation testing qa robotframework"
+KEYWORDS = "automation api testautomation testing qa openapi robotframework"
 DESCRIPTION = "Test framework for auto-generating libraries from OpenAPI specification file"
 
 setup(
-    name=f"robotframework-{PACKAGE}",
+    name=f"{PACKAGE}",
     version=__version__,
     description=DESCRIPTION,
     long_description=README,
     long_description_content_type="text/markdown",
-    url=f"https://github.com/bhirsz/robotframework-{PACKAGE}",
-    download_url=f"https://pypi.org/project/robotframework-{PACKAGE}",
+    url=f"https://github.com/MarketSquare/{PACKAGE}",
+    download_url=f"https://pypi.org/project/{PACKAGE}",
     author="Mateusz Nojek, Bartlomiej Hirsz",
     author_email="matnojek@gmail.com, bartek.hirsz@gmail.com",
     license="Apache License 2.0",
@@ -43,6 +43,7 @@ setup(
     packages=[PACKAGE],
     include_package_data=True,
     install_requires=[
+        "black>=22.3",
         "robotframework>=4.1",
         "requests>=2.26",
         "urllib3>=1.26",
