@@ -4,7 +4,7 @@ from roboswag.generate.models.endpoint import Endpoint
 
 
 class Tag:
-    def __init__(self, name: str, description: str = None) -> None:
+    def __init__(self, name: str, description: str = "") -> None:
         # tag is grouped paths/endpoints
         self.name: str = name
         self.description: str = description
