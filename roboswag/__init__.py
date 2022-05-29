@@ -1,12 +1,19 @@
+from importlib.metadata import version
+
 import requests
 import urllib3
 
 from roboswag.auth import TokenHandler
 from roboswag.logger import Logger
-from roboswag.version import __version__
 from roboswag.__main__ import run_roboswag
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
+try:
+    __version__ = version("roboswag")
+except Exception:  # pragma: no cover
+    pass
 
 
 class APIModel:
