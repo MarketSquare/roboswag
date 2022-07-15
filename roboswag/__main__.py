@@ -1,8 +1,13 @@
 import argparse
 import sys
+from importlib.metadata import version
 
-from roboswag.version import __version__
 from roboswag.generate.generate import generate
+
+try:
+    __version__ = version("roboswag")
+except Exception:  # pragma: no cover
+    pass
 
 
 def generate_cli():
