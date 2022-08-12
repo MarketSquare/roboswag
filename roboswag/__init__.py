@@ -3,9 +3,9 @@ from importlib.metadata import version
 import requests
 import urllib3
 
+from roboswag.__main__ import run_roboswag
 from roboswag.auth import TokenHandler
 from roboswag.logger import Logger
-from roboswag.__main__ import run_roboswag
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
