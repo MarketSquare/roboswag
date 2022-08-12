@@ -1,3 +1,3 @@
-from roboswag import run_roboswag
+from roboswag import cli
 
-run_roboswag()
+cli()
