@@ -93,3 +93,6 @@ venv.bak/
 log.html
 report.html
 output.xml
+
+# Generated SwaggerPetStore endpoints
+SwaggerPetstore/

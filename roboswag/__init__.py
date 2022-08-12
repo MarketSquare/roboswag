@@ -1,2 +1,2 @@
 from roboswag.cli import run_roboswag
-from roboswag.model import APIModel
+from roboswag.core import APIModel
