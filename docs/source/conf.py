@@ -14,9 +14,7 @@ release = __version__
 version = __version__
 master_doc = "index"
 
-extensions = ["sphinx_copybutton", "sphinx_design"]
-
-templates_path = ["_templates"]
+extensions = ["sphinx_design"]
 
 exclude_patterns = []
 
@@ -38,5 +36,5 @@ html_theme_options = {
         },
     ],
 }
-html_static_path = ["_static"]
+# html_static_path = ["_static"] TODO
 # html_favicon = "_static/robotidy.ico" TODO
