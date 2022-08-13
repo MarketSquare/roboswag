@@ -1,6 +1,6 @@
 import rich_click as click
 
-from roboswag.generate.generate import generate
+from roboswag.generate import generate_libraries
 from roboswag.version import __version__
 
 CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
@@ -33,4 +33,4 @@ def cli():
 )
 def generate(spec: str):
     """Generate Python libraries."""
-    generate(spec)
+    generate_libraries(spec)

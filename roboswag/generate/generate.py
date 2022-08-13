@@ -9,7 +9,7 @@ from roboswag.generate.models.api import APIModelCreator
 from roboswag.generate.models.definition import Definition
 
 
-def generate(source, output: Optional[Path] = None):
+def generate_libraries(source, output: Optional[Path] = None):
     api_model, swagger = APIModelCreator.from_prance(source)
     output_dir = api_model.name
     if output is not None:
