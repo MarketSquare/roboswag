@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import List, Dict
+from typing import Dict, List
 
 from roboswag.generate.models.parameter import Parameter
 from roboswag.generate.models.response import Response
