@@ -3,9 +3,19 @@ import rich_click as click
 from roboswag.generate.generate import generate
 from roboswag.version import __version__
 
+CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
 
-@click.command(context_settings={"help_option_names": ["-h", "--help"]})
+
+@click.group(invoke_without_command=True, context_settings=CONTEXT_SETTINGS)
 @click.version_option(version=__version__, prog_name="roboswag")
+def cli():
+    """
+    Roboswag is a tool that generates Python libraries out of your Swagger (OpenAPI specification file).
+    """
+    pass
+
+
+@cli.command()
 @click.option(
     "-s",
     "--spec",
@@ -21,8 +31,6 @@ from roboswag.version import __version__
     metavar="SWAGGER",
     help="OpenAPI specification file",
 )
-def cli(spec: str):
-    """
-    Roboswag is a tool that generates Python libraries out of your Swagger (OpenAPI specification file).
-    """
+def generate(spec: str):
+    """Generate Python libraries."""
     generate(spec)
