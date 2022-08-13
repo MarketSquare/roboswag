@@ -4,7 +4,6 @@ import subprocess
 
 from invoke import task
 
-
 ROOT = pathlib.Path(__file__).parent.resolve().as_posix()
 
 

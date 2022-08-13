@@ -10,8 +10,7 @@ from roboswag.generate.models.endpoint import Endpoint
 from roboswag.generate.models.parameter import Parameter
 from roboswag.generate.models.response import Response
 from roboswag.generate.models.tag import Tag
-from roboswag.generate.models.utils import get_python_type
-from roboswag.generate.models.utils import pythonify_name
+from roboswag.generate.models.utils import get_python_type, pythonify_name
 
 
 class APIModel:
