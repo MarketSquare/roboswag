@@ -101,6 +101,6 @@ def generate_schemas(swagger, output_dir):
         with open(schema_file, "w") as f:
             f.write(json.dumps(schema, indent=4))
             f.write("\n")
-        print(f"Generated '{output_dir}\\{schema_name}.json' file")
+        print(f"Generated '{schema_file}' file")
         schema_files.append(schema_file)
     return schema_files
