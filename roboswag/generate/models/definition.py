@@ -1,11 +1,11 @@
 from typing import List
 
-from roboswag.generate.models.utils import get_python_type, pythonify_name, replace_reserved_name
+from roboswag.generate.models.utils import get_python_type, pythonify_name
 
 
 class Property:
     def __init__(self, name: str, prop_type=None):
-        self.name: str = replace_reserved_name(pythonify_name(name))
+        self.name: str = pythonify_name(name)
         self.type = prop_type
 
 

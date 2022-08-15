@@ -10,14 +10,14 @@ from roboswag.cli import cli
 TEST_DATA_DIR = Path(__file__).parent / "test_data"
 
 
-def run_cli(args: List[str], exit_code: int = 0, temp_work_dir: bool = True, catch_exceptions: bool = False):
+def run_cli(args: List[str], exit_code: int = 0, temp_work_dir: bool = True):
     runner = CliRunner()
     arguments = args if args is not None else []
     if temp_work_dir:
         with runner.isolated_filesystem():
-            result = runner.invoke(cli, arguments, catch_exceptions=catch_exceptions)
+            result = runner.invoke(cli, arguments)
     else:
-        result = runner.invoke(cli, arguments, catch_exceptions=catch_exceptions)
+        result = runner.invoke(cli, arguments)
     if result.exit_code != exit_code:
         print(result.output)
         raise AssertionError(f"robotidy exit code: {result.exit_code} does not match expected: {exit_code}")
