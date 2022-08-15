@@ -19,6 +19,11 @@ def format_code(context):
     subprocess.run(f"isort {ROOT}", shell=True, check=False)
 
 
+@task
+def docs(context):
+    subprocess.run("sphinx-build -b html docs/source docs/_build/", shell=True)
+
+
 @task(format_code)
 def build(context):
     subprocess.run("poetry build", shell=True, check=False)
