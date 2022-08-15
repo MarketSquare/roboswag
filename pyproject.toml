@@ -51,6 +51,7 @@ types-requests = "^2.27.29"
 sphinx = ">=5.1"
 furo = ">=2022.6.21"
 sphinx_design = "^0.2.0"
+coverage = "^6.4.3"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
