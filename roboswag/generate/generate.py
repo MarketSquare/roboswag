@@ -37,6 +37,7 @@ def blackify_files(path_list: List[Path]):
 
 
 def blackify_file(source):
+    print(source)
     black.format_file_in_place(source, fast=True, mode=black.FileMode(), write_back=black.WriteBack.YES)
 
 
