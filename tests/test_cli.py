@@ -19,3 +19,8 @@ def test_help(command, help_cmd):
         args = [help_cmd]
     result = run_cli(args)
     assert "Usage: " in result.output
+
+
+def test_version():
+    result = run_cli(["--version"])
+    assert "roboswag, version" in result.output
