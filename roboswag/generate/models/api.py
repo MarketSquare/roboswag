@@ -92,7 +92,7 @@ class APIModel:
             def_type = def_body.get("type", "")
             def_req = def_body.get("required")
             properties = []
-            for prop_name, prop_body in def_body.get("properties", {}).items():
+            for prop_name, prop_body in def_body.get("properties", []).items():
                 prop_type = prop_body.get("type", "")
                 prop_format = prop_body.get("format", "")
                 properties.append(Property(prop_name, prop_type=get_python_type(prop_type, prop_format)))

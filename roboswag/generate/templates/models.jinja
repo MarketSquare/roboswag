@@ -2,6 +2,3 @@ class {{ class_name }}:
     def __init__(self{% if properties %}{% for property in properties %}, {{ property.name }}: {{ property.type.__name__ }}{% endfor %}{% endif %}):
         {% for property in properties %}self.{{ property.name }} = {{ property.name }}
         {% endfor %}
-        {% if not properties %}
-            pass
-        {% endif %}
