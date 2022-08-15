@@ -40,7 +40,7 @@ def get_python_type(param_type, param_format=None):
 
 
 def pythonify_name(name: str) -> str:
-    names = re.sub("([A-Z][a-z]+)", r" \1", re.sub("([A-Z]+)", r" \1", name)).split()
-    name = "_".join(name.lower() for name in names)
+    names = re.split("([A-Z][a-z]+)", name)
+    name = "_".join(name.lower() for name in names if name.strip())
     name = name.replace("-", "")
     return name
