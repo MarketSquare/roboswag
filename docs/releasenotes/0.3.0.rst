@@ -1,0 +1,49 @@
+Roboswag 0.3.0
+=========================================
+Fixes and changes to improve Roboswag compatibility with OpenAPi v2. Also our project went through
+transformation - we added automated workflows, started working on tests and
+initialized external documentation.
+
+You can install the latest available version by running::
+
+    pip install --upgrade roboswag
+
+or to install exactly this version::
+
+    pip install roboswag==0.3.0
+
+CLI refactor
+-------------
+Roboswag CLI went through major refactor. Now we are using click instead of argparse.
+It includes backward incompatible change - if you want to generate Python files you need to use
+``generate`` command (`#32 <https://github.com/MarketSquare/roboswag/issues/32>`_).
+
+Old::
+
+    roboswag -s spec.json
+
+New::
+
+    roboswag generate -s spec.json
+
+Fixes
+------
+- If the definition didn't have properties, it defaulted to empty list while Roboswag expected dict (`#43 <https://github.com/MarketSquare/roboswag/issues/43>`_)
+- Refatored pythonify name method to be more efficient (`#43 <https://github.com/MarketSquare/roboswag/issues/43>`_)
+- If the model didn't have any properties, it failed to generate (`#43 <https://github.com/MarketSquare/roboswag/issues/43>`_)
+- Properties can contain names which are reserved words in Python (like global) and it failed to generate (`#43 <https://github.com/MarketSquare/roboswag/issues/43>`_)
+- Roboswag didn't work on Python 3.7 (`#39 <https://github.com/MarketSquare/roboswag/issues/39>`_)
+
+Other
+-----
+It is mostly changes around our project but it will greatly in Roboswag development:
+
+- added precommits (`#30 <https://github.com/MarketSquare/roboswag/issues/30>`_)
+- automated release workflow (`#33 <https://github.com/MarketSquare/roboswag/issues/33>`_)
+- bootstrapped external docs with automatic builds (`#35 <https://github.com/MarketSquare/roboswag/issues/35>`_)
+- created first tests & started working on test framework (`#37 <https://github.com/MarketSquare/roboswag/issues/37>`_)
+- test workflow (`#38 <https://github.com/MarketSquare/roboswag/issues/38>`_)
+
+Acknowledgements
+-----------------
+-  `@terezachudobova <https://github.com/terezachudobova>`_ for raising the issues and helping with test data
