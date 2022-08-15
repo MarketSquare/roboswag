@@ -1,9 +1,9 @@
 {
 	"swagger": "2.0",
 	"info": {
-		"description": "Api Documentation",
+		"description": "Longer description about API",
 		"version": "1.0",
-		"title": "Api Documentation",
+		"title": "Documentation of the X API",
 		"termsOfService": "abc:tos",
 		"contact": {},
 		"license": {
@@ -11,7 +11,7 @@
 			"url": "http://www.apache.org/licenses/LICENSE-2.0"
 		}
 	},
-	"host": "int-abc.company.us:18080",
+	"host": "int-abc.company.us:1234",
 	"basePath": "/abc/fs/test",
 	"tags": [
 		{
