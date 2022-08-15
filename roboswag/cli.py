@@ -1,22 +1,36 @@
-import argparse
-import sys
+import rich_click as click
 
+from roboswag.generate import generate_libraries
 from roboswag.version import __version__
-from roboswag.generate.generate import generate
+
+CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
 
 
-def generate_cli():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--spec", metavar="SWAGGER", help="OpenAPI specification file")
-    parser.add_argument(
-        "-v", "--version", action="version", version=__version__, help="display Roboswag version and exit"
-    )
-    args = parser.parse_args()
-    if not args.spec:
-        print("Please provide specification file with '-s' option")
-        sys.exit(1)
-    generate(args.spec)
+@click.group(invoke_without_command=True, context_settings=CONTEXT_SETTINGS)
+@click.version_option(version=__version__, prog_name="roboswag")
+def cli():
+    """
+    Roboswag is a tool that generates Python libraries out of your Swagger (OpenAPI specification file).
+    """
+    pass
 
 
-def run_roboswag():
-    generate_cli()
+@cli.command()
+@click.option(
+    "-s",
+    "--spec",
+    type=click.Path(
+        exists=True,
+        file_okay=True,
+        dir_okay=False,
+        readable=True,
+        allow_dash=False,
+        path_type=str,
+    ),
+    required=True,
+    metavar="SWAGGER",
+    help="OpenAPI specification file",
+)
+def generate(spec: str):
+    """Generate Python libraries."""
+    generate_libraries(spec)

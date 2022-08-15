@@ -52,7 +52,7 @@ roboswag -v
 To execute Roboswag with its full capabilities, run it with provided path to the Swagger (OpenAPI specification) file:
 
 ```commandline
-roboswag -s <path_to_swagger>
+roboswag generate -s <path_to_swagger>
 ```
 
 > You can try out the tool using the example of swagger file located in `swaggers/petstore.json`.
