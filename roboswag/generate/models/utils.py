@@ -39,8 +39,11 @@ def get_python_type(param_type, param_format=None):
     return str
 
 
-def pythonify_name(name: str) -> str:
+def pythonify_name(name: str, join_mark: str = "_", join_fn: str = "lower") -> str:
     names = re.split("([A-Z][a-z]+)", name)
-    name = "_".join(name.lower() for name in names if name.strip())
+    if join_fn == "lower":
+        name = join_mark.join(name.lower() for name in names if name.strip())
+    elif join_fn == "title":
+        name = join_mark.join(name.title() for name in names if name.strip())
     name = name.replace("-", "")
     return name
