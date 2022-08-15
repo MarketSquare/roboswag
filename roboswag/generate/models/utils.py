@@ -1,6 +1,8 @@
 import datetime
 import re
-from typing import Dict
+from typing import Dict, List
+
+RESERVED_WORDS = {"global", "cls", "self"}
 
 types_mapping = {
     "string": {
@@ -39,8 +41,18 @@ def get_python_type(param_type, param_format=None):
     return str
 
 
-def pythonify_name(name: str) -> str:
-    names = re.sub("([A-Z][a-z]+)", r" \1", re.sub("([A-Z]+)", r" \1", name)).split()
-    name = "_".join(name.lower() for name in names)
+def pythonify_name(name: str, join_mark: str = "_", join_fn: str = "lower") -> str:
+    names = re.split("([A-Z][a-z]+)", name)
+    if join_fn == "lower":
+        name = join_mark.join(name.lower() for name in names if name.strip())
+    elif join_fn == "title":
+        name = join_mark.join(name.title() for name in names if name.strip())
     name = name.replace("-", "")
+    return name
+
+
+def replace_reserved_name(name: str) -> str:
+    """If the name is in reserved words, append it with _"""
+    if name in RESERVED_WORDS:
+        return f"_{name}"
     return name
