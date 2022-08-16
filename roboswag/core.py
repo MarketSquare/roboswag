@@ -31,7 +31,7 @@ class APIModel:
             self.session.proxies.update(proxies)
         self.authorization = authorization
         self.logger = Logger()
-        self.validate = ValidateSchema()
+        self.validate = ValidateSchema(self.logger)
         if headers is not None:
             self.session.headers.update(headers)
 
