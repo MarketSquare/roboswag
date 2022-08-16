@@ -21,17 +21,12 @@ def validator():
 
 @pytest.fixture
 def valid_response():
-    response = Mock()
-    response_json = {"code": 123, "type": "abc", "message": "abc"}
-    response.json = Mock(return_value=response_json)
-    return response
+    return {"code": 123, "type": "abc", "message": "abc"}
 
 
 @pytest.fixture
 def invalid_response():
-    response = Mock()
-    response.json = Mock(return_value={"code": "123"})
-    return response
+    return {"code": "123"}
 
 
 def test_validate_valid_schema_path(validator, valid_response):
