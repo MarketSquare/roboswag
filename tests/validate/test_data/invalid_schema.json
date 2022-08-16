@@ -1,0 +1,15 @@
+{
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "unknown",
+          "format": "int32"
+        },
+        "type": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+}

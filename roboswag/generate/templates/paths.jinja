@@ -57,11 +57,8 @@ class {{ class_name }}(APIModel):
         if validate_schema:{% for status_code, resp in endpoint.responses.items() %}
         {%- if resp.schema %}
             {% if not loop.first %}el{% endif %}if response.status_code == {{ status_code }}:
-                try:
-                    schema = {{ resp.schema }}
-                    validate(instance=json.loads(response.text), schema=schema)
-                except jsonschema.exceptions.ValidationError as err:
-                    raise err
+                schema = {{ resp.schema }}
+                self.validate.schema(response, schema)
         {%- elif status_code != "default" %}
             {% if not loop.first %}el{% endif %}if response.status_code == {{ status_code }}:
                 expected_text = "{{ resp.description }}"
