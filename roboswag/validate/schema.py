@@ -4,10 +4,10 @@ from typing import Dict, Union
 
 import jsonschema
 
-from roboswag.validate.core import Validate
+from roboswag.validate.core import ValidateBase
 
 
-class ValidateSchema(Validate):
+class ValidateSchema(ValidateBase):
     def schema(self, response, schema: Union[str, Path, Dict]):
         self.logger.info("Validating schema...")
         if isinstance(schema, (str, Path)):

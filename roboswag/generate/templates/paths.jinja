@@ -61,16 +61,10 @@ class {{ class_name }}(APIModel):
                 self.validate.schema(response, schema)
         {%- elif status_code != "default" %}
             {% if not loop.first %}el{% endif %}if response.status_code == {{ status_code }}:
-                expected_text = "{{ resp.description }}"
-                assertion_err_msg = f"Received response description:\n    '{response.text}'\n" \
-                                    f"does not equal expected:\n    '{expected_text}'"
-                assert response.text == expected_text, assertion_err_msg
+                self.validate.error(response, "{{ resp.description }}")
         {%- else %}
             {% if not loop.first %}el{% endif %}if response.status_code == "default":
-                expected_text = "{{ resp.description }}"
-                assertion_err_msg = f"Received response description:\n    '{response.text}'\n" \
-                                    f"does not equal expected:\n    '{expected_text}'"
-                assert response.text == expected_text, assertion_err_msg
+                self.validate.error(response, "{{ resp.description }}")
         {%- endif %}{% endfor %}
             else:
                 logging.error(f"Received status code ({response.status_code}) is not expected by the API specification")
