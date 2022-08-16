@@ -15,7 +15,8 @@ INVALID_SCHEMA_JSON = TEST_DATA / "invalid_schema_json.json"
 
 @pytest.fixture
 def validator():
-    return ValidateSchema
+    logger = Mock()
+    return ValidateSchema(logger=logger)
 
 
 @pytest.fixture

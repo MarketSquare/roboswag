@@ -5,6 +5,14 @@ from robot.api import logger
 
 class Logger:
     @staticmethod
+    def info(message):
+        logger.info(message)
+
+    @staticmethod
+    def debug(message):
+        logger.debug(message)
+
+    @staticmethod
     def log_request(response):
         # TODO we can add flag for removing auth details (such as passwords, tokens) if needed
         if response.history:  # TODO print redirects
