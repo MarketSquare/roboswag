@@ -7,4 +7,4 @@ class ValidateError(ValidateBase):
         assertion_err_msg = (
             f"Received response description:\n    '{response.text}'\n" f"does not equal expected:\n    '{exp_error}'"
         )
-        assert response.tex == exp_error, assertion_err_msg
+        assert response.text == exp_error, assertion_err_msg

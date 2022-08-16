@@ -1,7 +1,4 @@
 import logging
-
-import jsonschema
-from jsonschema import validate
 import json
 
 from roboswag import APIModel
@@ -40,11 +37,8 @@ class {{ class_name }}(APIModel):
 {%- if endpoint.body %}
         if validate_payload:
         {%- if endpoint.body.schema %}
-            try:
-                schema = {{ endpoint.body.schema }}
-                validate(instance=json.loads(body), schema=schema)
-            except jsonschema.exceptions.ValidationError as err:
-                raise err
+            schema = {{ endpoint.body.schema }}
+            self.validate.schema(json.loads(body), schema)
         {%- endif %}
 
         _body = {{ endpoint.body.python_name }}
@@ -58,7 +52,7 @@ class {{ class_name }}(APIModel):
         {%- if resp.schema %}
             {% if not loop.first %}el{% endif %}if response.status_code == {{ status_code }}:
                 schema = {{ resp.schema }}
-                self.validate.schema(response, schema)
+                self.validate.schema(response.json(), schema)
         {%- elif status_code != "default" %}
             {% if not loop.first %}el{% endif %}if response.status_code == {{ status_code }}:
                 self.validate.error(response, "{{ resp.description }}")
