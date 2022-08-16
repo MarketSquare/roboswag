@@ -3,7 +3,7 @@ import urllib3
 
 from roboswag.auth import TokenHandler
 from roboswag.logger import Logger
-from roboswag.validate import ValidateSchema
+from roboswag.validate import Validate
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
@@ -31,7 +31,7 @@ class APIModel:
             self.session.proxies.update(proxies)
         self.authorization = authorization
         self.logger = Logger()
-        self.validate = ValidateSchema(self.logger)
+        self.validate = Validate(self.logger)
         if headers is not None:
             self.session.headers.update(headers)
 
