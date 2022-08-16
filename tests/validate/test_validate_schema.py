@@ -5,7 +5,7 @@ from unittest.mock import Mock
 import jsonschema
 import pytest
 
-from roboswag.validate import ValidateSchema
+from roboswag.validate import Validate
 
 TEST_DATA = Path(__file__).parent / "test_data"
 VALID_SCHEMA = TEST_DATA / "valid_schema.json"
@@ -16,7 +16,7 @@ INVALID_SCHEMA_JSON = TEST_DATA / "invalid_schema_json.json"
 @pytest.fixture
 def validator():
     logger = Mock()
-    return ValidateSchema(logger=logger)
+    return Validate(logger=logger)
 
 
 @pytest.fixture
