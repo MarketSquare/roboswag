@@ -44,12 +44,36 @@ class APIModel:
             name += f"_{part.lower()}"
         return name
 
+    @staticmethod
+    def class_name_from_tag(method_body, **kwargs):
+        return method_body["tags"][0].strip(" -_").title()
+
+    @staticmethod
+    def class_name_from_path(path, **kwargs):
+        for part in path.split("/"):
+            part = re.sub("[/{}]", "", part)
+            if not part:
+                continue
+            return part.title()
+
+    def set_source_of_class_name(self, swagger):
+        """
+        If all methods have their tags - use tag name. Otherwise use first part of the path.
+        """
+        # TODO configurable class name
+        for path_body in swagger["paths"].values():
+            for method in path_body.values():
+                if "tag" not in method:
+                    return self.class_name_from_path
+        return self.class_name_from_tag
+
     def parse_paths(self, swagger):
+        get_class_name = self.set_source_of_class_name(swagger)
         for path, path_body in swagger["paths"].items():
             method: str
             method_body: Dict
             for method, method_body in path_body.items():
-                tag_name = method_body["tags"][0].strip(" -_").title()  # TODO configurable class name
+                class_name = get_class_name(path=path, method_body=method_body)
                 unique_name = self.get_unique_endpoint_name(path, method, method_body)
                 summary = method_body.get("summary", "")
                 description = method_body.get("description", "")
@@ -87,7 +111,7 @@ class APIModel:
                     body=body,
                     responses=responses,
                 )
-                self.add_endpoint_to_tag(tag_name, endpoint)
+                self.add_endpoint_to_tag(class_name, endpoint)
 
     def parse_tags(self, swagger):
         if not swagger.get("tags"):

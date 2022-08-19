@@ -1,0 +1,2058 @@
+{
+	"swagger": "2.0",
+	"info": {
+		"description": "Longer description about API",
+		"version": "1.0",
+		"title": "Documentation of the X API",
+		"termsOfService": "abc:tos",
+		"contact": {},
+		"license": {
+			"name": "Apache 2.0",
+			"url": "http://www.apache.org/licenses/LICENSE-2.0"
+		}
+	},
+	"host": "int-abc.company.us:1234",
+	"basePath": "/abc/fs/test",
+	"tags": [
+		{
+			"name": "word-hyphen-action",
+			"description": "Word Hyphen Action"
+		},
+		{
+			"name": "word-ping-action",
+			"description": "Word Ping Action"
+		},
+		{
+			"name": "fed-check-name-action",
+			"description": "Fed Check Name Action"
+		},
+		{
+			"name": "fed-test-support-action",
+			"description": "Fed Test Support Action"
+		},
+		{
+			"name": "login-session-test-action",
+			"description": "Login Session Test Action"
+		},
+		{
+			"name": "perf-test-action",
+			"description": "Perf Test Action"
+		},
+		{
+			"name": "property-action",
+			"description": "Property Action"
+		},
+		{
+			"name": "test-action",
+			"description": "Test Action"
+		}
+	],
+	"paths": {
+		"/check-lat": {
+			"get": {
+				"tags": [
+					"login-session-test-action"
+				],
+				"summary": "checkLat",
+				"operationId": "checkLatUsingGET",
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "lat",
+						"in": "query",
+						"description": "lat",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/error": {
+			"get": {
+				"tags": [
+					"word-hyphen-action"
+				],
+				"summary": "restError",
+				"operationId": "restErrorUsingGET",
+				"produces": [
+					"text/html"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			},
+			"post": {
+				"tags": [
+					"word-hyphen-action"
+				],
+				"summary": "restError",
+				"operationId": "restErrorUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"text/html"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/perf-test/create-tokens": {
+			"get": {
+				"summary": "createTokens",
+				"operationId": "createTokensUsingGET",
+				"produces": [
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"name": "X-CorrelationId",
+						"in": "header",
+						"description": "X-CorrelationId",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "at-count-per-rt",
+						"in": "query",
+						"description": "at-count-per-rt",
+						"required": false,
+						"type": "integer",
+						"default": 10,
+						"format": "int32"
+					},
+					{
+						"name": "at-validity-seconds",
+						"in": "query",
+						"description": "at-validity-seconds",
+						"required": false,
+						"type": "integer",
+						"default": 5,
+						"format": "int32"
+					},
+					{
+						"name": "rt-count",
+						"in": "query",
+						"description": "rt-count",
+						"required": false,
+						"type": "integer",
+						"default": 10000,
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/perf-test/get-property-to-store-metadata-as-json": {
+			"get": {
+				"tags": [
+					"perf-test-action"
+				],
+				"summary": "getPropertyMetadataAsJson",
+				"operationId": "getPropertyMetadataAsJsonUsingGET",
+				"produces": [
+					"text/plain"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/perf-test/get-removeoldtokens-secondsoffset": {
+			"get": {
+				"tags": [
+					"perf-test-action"
+				],
+				"summary": "getRemoveoldtokensSecondsoffset",
+				"operationId": "getRemoveoldtokensSecondsoffsetUsingGET",
+				"produces": [
+					"text/plain"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/perf-test/set-property-to-store-metadata-as-json": {
+			"get": {
+				"tags": [
+					"perf-test-action"
+				],
+				"summary": "setPropertyMetadataAsJson",
+				"operationId": "setPropertyMetadataAsJsonUsingGET",
+				"produces": [
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"name": "value",
+						"in": "query",
+						"description": "value",
+						"required": true,
+						"type": "boolean"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/perf-test/set-removeoldtokens-secondsoffset": {
+			"get": {
+				"tags": [
+					"perf-test-action"
+				],
+				"summary": "setRemoveoldtokensSecondsoffset",
+				"operationId": "setRemoveoldtokensSecondsoffsetUsingGET",
+				"produces": [
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"name": "value",
+						"in": "query",
+						"description": "value",
+						"required": false,
+						"type": "integer",
+						"default": 10800,
+						"format": "int32"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/perf-test/tokensCount": {
+			"get": {
+				"tags": [
+					"perf-test-action"
+				],
+				"summary": "tokensCount",
+				"produces": [
+					"text/plain"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/ping": {
+			"get": {
+				"tags": [
+					"word-ping-action"
+				],
+				"summary": "restPing",
+				"operationId": "restPingUsingGET",
+				"produces": [
+					"application/json",
+					"text/plain"
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/property": {
+			"get": {
+				"tags": [
+					"property-action"
+				],
+				"summary": "restGenToken",
+				"operationId": "restGenTokenUsingGET",
+				"produces": [
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"name": "X-TRN-ID",
+						"in": "header",
+						"description": "X-TRN-ID",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "property_name",
+						"in": "query",
+						"description": "property_name",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/all-identity-all-consent-scopes": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "allIdentityAllConsentScopes",
+				"operationId": "allIdentityAllConsentScopesUsingGET",
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "appId",
+						"in": "query",
+						"description": "appId",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "muid",
+						"in": "query",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/IamConsentScopeInfo"
+							}
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/auid-info-by-appId-muid/{app-id}/{muid}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "getAuidByAppIdAndMuid",
+				"operationId": "getAuidByAppIdAndMuidUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "app-id",
+						"in": "path",
+						"description": "app-id",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/IamAuidInfo"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/by-cluid/{cluid}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "getIdentityByMuid",
+				"operationId": "getIdentityByMuidUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "cluid",
+						"in": "path",
+						"description": "cluid",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/IdentityImpl"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/by-muid/{muid}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "getIdentityByMuid",
+				"operationId": "getIdentityByMuidUsingGET_1",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/IdentityImpl"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/by-nickname/{nickname}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "getIdentityByNickname",
+				"operationId": "getIdentityByNicknameUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "nickname",
+						"in": "path",
+						"description": "nickname",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/IdentityImpl"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/change-adaptive-status/{muid}/{activate}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "changeAdaptiveStatus",
+				"operationId": "changeAdaptiveStatusUsingGET",
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "X-CorrelationId",
+						"in": "header",
+						"description": "X-CorrelationId",
+						"required": false,
+						"type": "string",
+						"default": "N/A"
+					},
+					{
+						"name": "activate",
+						"in": "path",
+						"description": "activate",
+						"required": true,
+						"type": "boolean"
+					},
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					},
+					{
+						"name": "securityMethod",
+						"in": "query",
+						"description": "securityMethod",
+						"required": false,
+						"type": "string",
+						"default": "ME0_CASE_MOBILE"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/change-cm-method-status/{muid}/{activate}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "changeCmMethodStatus",
+				"operationId": "changeCmMethodStatusUsingGET",
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "activate",
+						"in": "path",
+						"description": "activate",
+						"required": true,
+						"type": "boolean"
+					},
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/change-freespeech-method-status/{muid}/{activate}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "changeFreeSpeechMethodStatus",
+				"operationId": "changeFreeSpeechMethodStatusUsingGET",
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "activate",
+						"in": "path",
+						"description": "activate",
+						"required": true,
+						"type": "boolean"
+					},
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/change-pwd-sms-method-status/{muid}/{activate}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "changePwdSmsMethodStatus",
+				"operationId": "changePwdSmsMethodStatusUsingGET",
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "activate",
+						"in": "path",
+						"description": "activate",
+						"required": true,
+						"type": "boolean"
+					},
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/createIamIdentity": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "createIamIdentity",
+				"operationId": "createIamIdentityUsingGET",
+				"produces": [
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"name": "cluid",
+						"in": "query",
+						"description": "cluid",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "nickname",
+						"in": "query",
+						"description": "nickname",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "securityPhoneNumber",
+						"in": "query",
+						"description": "securityPhoneNumber",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/generate-ak/{muid}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "generateAk",
+				"operationId": "generateAkUsingGET",
+				"produces": [
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/generate-nid-identity/{nickname}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "generateNidIdentity",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "nickname",
+						"in": "path",
+						"description": "nickname",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/get-ak-status/{muid}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "getAkStatus",
+				"operationId": "getAkStatusUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/IamAKStatusInfo"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/get-scopes-to-display": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "getScopesToDisplay",
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "appId",
+						"in": "query",
+						"description": "appId",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "isPromntConsent",
+						"in": "query",
+						"description": "isPromntConsent",
+						"required": false,
+						"type": "boolean",
+						"default": false
+					},
+					{
+						"name": "muid",
+						"in": "query",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					},
+					{
+						"name": "requested-scopes",
+						"in": "query",
+						"description": "requested-scopes",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/IamScopeAgreementStatus"
+							}
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/invalidate-ak/{muid}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "invalidateActivationCode",
+				"operationId": "invalidateActivationCodeUsingGET",
+				"produces": [
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/methods-by-muid/{muid}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "getMethodsByMuid",
+				"operationId": "getMethodsByMuidUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "muid",
+						"in": "path",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/MethodImpl"
+							}
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/scope-service-iam-application-info/{appId}": {
+			"get": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "getIamApplicationInfoByAppId",
+				"operationId": "getIamApplicationInfoByAppIdUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "appId",
+						"in": "path",
+						"description": "appId",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/IamApplicationInfo"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/set-identity-consent-scopes": {
+			"post": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "setIdentityConsentScopes",
+				"operationId": "setIdentityConsentScopesUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"name": "appId",
+						"in": "query",
+						"description": "appId",
+						"required": true,
+						"type": "string"
+					},
+					{
+						"name": "muid",
+						"in": "query",
+						"description": "muid",
+						"required": true,
+						"type": "integer",
+						"format": "int64"
+					},
+					{
+						"in": "body",
+						"name": "param2",
+						"description": "param2",
+						"required": true,
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/IamConsentScopeInfo"
+							}
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/test-redirect": {
+			"post": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "redirect",
+				"operationId": "redirectUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"*/*"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "param0",
+						"description": "param0",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/RedirectJson"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/check-name/test-redirect-ulf-logging": {
+			"post": {
+				"tags": [
+					"fed-check-name-action"
+				],
+				"summary": "generateAk",
+				"operationId": "generateAkUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"name": "X-CorrelationId",
+						"in": "header",
+						"description": "X-CorrelationId",
+						"required": false,
+						"type": "string",
+						"default": "N/A"
+					},
+					{
+						"in": "body",
+						"name": "param1",
+						"description": "param1",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/IdentityJson"
+						}
+					},
+					{
+						"name": "requestParam",
+						"in": "query",
+						"description": "requestParam",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK"
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/test-support/apps-by-provider-id/{providerId}": {
+			"get": {
+				"tags": [
+					"fed-test-support-action"
+				],
+				"summary": "getIamApplication",
+				"operationId": "getIamApplicationUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "providerId",
+						"in": "path",
+						"description": "providerId",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "array",
+							"items": {
+								"$ref": "#/definitions/IamApplicationInfo"
+							}
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/test-support/create-ib-hash/": {
+			"post": {
+				"tags": [
+					"fed-test-support-action"
+				],
+				"summary": "createIbHash",
+				"operationId": "createIbHashUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"text/plain"
+				],
+				"parameters": [
+					{
+						"name": "channelId",
+						"in": "query",
+						"description": "channelId",
+						"required": false,
+						"type": "string",
+						"default": "servis24"
+					},
+					{
+						"name": "inputVectorValue",
+						"in": "query",
+						"description": "inputVectorValue",
+						"required": false,
+						"type": "string",
+						"default": "00000000000000000000000000000001"
+					},
+					{
+						"in": "body",
+						"name": "param2",
+						"description": "param2",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/CreateIbHashData"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "string"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/test-support/decrypt-ib-hash/": {
+			"post": {
+				"tags": [
+					"fed-test-support-action"
+				],
+				"summary": "decryptIbHash",
+				"operationId": "decryptIbHashUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "channelId",
+						"in": "query",
+						"description": "channelId",
+						"required": false,
+						"type": "string",
+						"default": "servis24"
+					},
+					{
+						"name": "ibHash",
+						"in": "query",
+						"description": "ibHash",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/LegacySsoBlob"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/test-support/styling-redirect-url-params/{appId}": {
+			"get": {
+				"tags": [
+					"fed-test-support-action"
+				],
+				"summary": "getStylingRedirectUrlParams",
+				"operationId": "getStylingRedirectUrlParamsUsingGET",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "appId",
+						"in": "path",
+						"description": "appId",
+						"required": true,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"type": "object",
+							"additionalProperties": {
+								"type": "string"
+							}
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/test-support/tokenInfo": {
+			"post": {
+				"tags": [
+					"fed-test-support-action"
+				],
+				"summary": "tokenInfo",
+				"operationId": "tokenInfoUsingPOST",
+				"consumes": [
+					"application/json"
+				],
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"in": "body",
+						"name": "param0",
+						"description": "param0",
+						"required": true,
+						"schema": {
+							"$ref": "#/definitions/TestTokenInfoRequest"
+						}
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/AbstractToken"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		},
+		"/testtokensvc": {
+			"get": {
+				"tags": [
+					"test-action"
+				],
+				"summary": "restGenToken",
+				"operationId": "restGenTokenUsingGET_1",
+				"produces": [
+					"application/json"
+				],
+				"parameters": [
+					{
+						"name": "X-TRN-ID",
+						"in": "header",
+						"description": "X-TRN-ID",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "access_type",
+						"in": "query",
+						"description": "access_type",
+						"required": false,
+						"type": "string",
+						"default": "online"
+					},
+					{
+						"name": "claim_response_type",
+						"in": "query",
+						"description": "claim_response_type",
+						"required": false,
+						"type": "string",
+						"default": "OAUTH_AUTHORIZATION_EP",
+						"enum": [
+							"OAUTH2_TOKEN_AE",
+							"OAUTH2_TOKEN_TE",
+							"SAML_RESPONSE",
+							"SAML_ASSERTION",
+							"OIDC_TOKEN_AE",
+							"OIDC_TOKEN_TE",
+							"SPNEGO_AE",
+							"TLS_AE",
+							"OAUTH_AUTHORIZATION_EP",
+							"OAUTH_TOKEN_EP",
+							"OAUTH_TOKEN_EP_RT",
+							"OAUTH_TOKEN_EP_CODE",
+							"OIDC_AUTHORIZATION_EP",
+							"OIDC_TOKEN_EP",
+							"OIDC_TOKEN_EP_CODE",
+							"OIDC_TOKEN_EP_RT",
+							"OIDCFTA_AUTHORIZATION_EP",
+							"OAUTH_SESSIONTOKEN_EP",
+							"OAUTH_HANDOVER_EP",
+							"OAUTH_EXCHANGE_EP",
+							"OAUTH_LEGACYSSO_EP",
+							"OAUTH_AUTHORIZATION_CONSENT",
+							"OAUTH_TOKEN_EP_JWT",
+							"OIDC_AUTHENTICATION_LOGIN_CODE",
+							"OIDC_TOKEN_CODE_IDTOKEN",
+							"OIDC_TOKEN_CODE_ATRT",
+							"OIDC_TOKEN_RT_IDTOKEN",
+							"OIDC_TOKEN_RT_AT",
+							"AT_IDENTITY",
+							"IDTOKEN_IDENTITY",
+							"OIDC_TOKEN_CODE_AT",
+							"OIDC_TOKEN_CODE_RT",
+							"OIDC_TOKEN_JWT_AT",
+							"OIDC_TOKEN_JWT_RT",
+							"OIDC_TOKEN_JWT_IDTOKEN",
+							"OIDC_AUTHORIZATION_LOGIN_CODE",
+							"OIDC_JWT_ASSERTION_AT_JWT"
+						]
+					},
+					{
+						"name": "client_id",
+						"in": "query",
+						"description": "client_id",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "cluid",
+						"in": "query",
+						"description": "cluid",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "cluid_po",
+						"in": "query",
+						"description": "cluid_po",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "expires_in",
+						"in": "query",
+						"description": "expires_in",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "force_scope",
+						"in": "query",
+						"description": "force_scope",
+						"required": false,
+						"type": "boolean",
+						"default": false
+					},
+					{
+						"name": "redirect_uri",
+						"in": "query",
+						"description": "redirect_uri",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "response_type",
+						"in": "query",
+						"description": "response_type",
+						"required": false,
+						"type": "string",
+						"default": "token"
+					},
+					{
+						"name": "scenario_key",
+						"in": "query",
+						"description": "scenario_key",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "scenario_muc_key",
+						"in": "query",
+						"description": "scenario_muc_key",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "scope",
+						"in": "query",
+						"description": "scope",
+						"required": false,
+						"type": "string"
+					},
+					{
+						"name": "scope_empty",
+						"in": "query",
+						"description": "scope_empty",
+						"required": false,
+						"type": "string",
+						"default": "false"
+					},
+					{
+						"name": "target_client_id",
+						"in": "query",
+						"description": "target_client_id",
+						"required": false,
+						"type": "string"
+					}
+				],
+				"responses": {
+					"200": {
+						"description": "OK",
+						"schema": {
+							"$ref": "#/definitions/MepTestErrorResponseObject"
+						}
+					}
+				},
+				"deprecated": false
+			}
+		}
+	},
+	"definitions": {
+		"AbstractToken": {
+			"type": "object",
+			"properties": {
+				"appId": {
+					"type": "string"
+				},
+				"auid": {
+					"type": "string"
+				},
+				"authMethod": {
+					"type": "string"
+				},
+				"authScenarioMucId": {
+					"type": "string"
+				},
+				"authScenarioSid": {
+					"type": "string"
+				},
+				"checkValue": {
+					"type": "string"
+				},
+				"clientId": {
+					"type": "string"
+				},
+				"cluid": {
+					"type": "string"
+				},
+				"createdAt": {
+					"type": "string"
+				},
+				"deviceId": {
+					"type": "string"
+				},
+				"groupId": {
+					"type": "string"
+				},
+				"hashedValue": {
+					"type": "string"
+				},
+				"jti": {
+					"type": "string"
+				},
+				"lastUsed": {
+					"type": "string"
+				},
+				"muid": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"nonce": {
+					"type": "string"
+				},
+				"pkceCodeChallenge": {
+					"type": "string"
+				},
+				"pkceCodeChallengeMethod": {
+					"type": "string",
+					"enum": [
+						"S256"
+					]
+				},
+				"scopes": {
+					"type": "string"
+				},
+				"sessionId": {
+					"type": "string"
+				},
+				"sessionState": {
+					"type": "string"
+				},
+				"state": {
+					"type": "string"
+				},
+				"targetAudience": {
+					"type": "string"
+				},
+				"tokenMetadata": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/TokenMetadata"
+					}
+				},
+				"tokenStatus": {
+					"type": "string",
+					"enum": [
+						"VALID",
+						"REVOKED",
+						"USED"
+					]
+				},
+				"tracestate": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string",
+					"enum": [
+						"us.subcompany.abc.fs.common.tokens.tokens.TokenType@52874352[name=REFRESH_TOKEN,prefix=1/,children=true,prettyName=Refresh token]",
+						"us.subcompany.abc.fs.common.tokens.tokens.TokenType@47f68cc0[name=AUTHORIZATION_CODE,prefix=2/,children=true,prettyName=Authz code]",
+						"us.subcompany.abc.fs.common.tokens.tokens.TokenType@79ba56d3[name=ACCESS_TOKEN,prefix=3/,children=false,prettyName=Access token]",
+						"us.subcompany.abc.fs.common.tokens.tokens.TokenType@991035c[name=SESSION_TOKEN,prefix=4/,children=false,prettyName=Session token]"
+					]
+				},
+				"validTo": {
+					"type": "string"
+				},
+				"value": {
+					"type": "string"
+				}
+			},
+			"title": "AbstractToken"
+		},
+		"Character": {
+			"type": "object",
+			"title": "Character"
+		},
+		"CreateIbHashData": {
+			"type": "object",
+			"properties": {
+				"bezp_tel": {
+					"type": "string"
+				},
+				"cluid": {
+					"type": "string"
+				},
+				"cluidPO": {
+					"type": "string"
+				},
+				"login_method": {
+					"type": "string"
+				},
+				"trn": {
+					"type": "string"
+				}
+			},
+			"title": "CreateIbHashData"
+		},
+		"IamAKStatusInfo": {
+			"type": "object",
+			"properties": {
+				"ak1deliveryChannel": {
+					"type": "string",
+					"enum": [
+						"SMS",
+						"EMAIL",
+						"MAIL",
+						"BRANCH",
+						"VOICE",
+						"ATM",
+						"SSP",
+						"CASE_MOBILE"
+					]
+				},
+				"ak1value": {
+					"type": "string"
+				},
+				"ak2deliveryChannel": {
+					"type": "string",
+					"enum": [
+						"SMS",
+						"EMAIL",
+						"MAIL",
+						"BRANCH",
+						"VOICE",
+						"ATM",
+						"SSP",
+						"CASE_MOBILE"
+					]
+				},
+				"ak2value": {
+					"type": "string"
+				},
+				"expirationWhen": {
+					"type": "string"
+				},
+				"generatedWhen": {
+					"type": "string"
+				},
+				"keyStatus": {
+					"type": "string",
+					"enum": [
+						"EXPIRED",
+						"PERMANENT_BLOCK",
+						"BLOCKED_BY_USAGE",
+						"BLOCKED",
+						"FIRST_PART_GENERATED",
+						"SECOND_PART_GENERATED",
+						"USED"
+					]
+				},
+				"secondPartSentWhen": {
+					"type": "string"
+				}
+			},
+			"title": "IamAKStatusInfo"
+		},
+		"IamApplicationInfo": {
+			"type": "object",
+			"properties": {
+				"active": {
+					"type": "boolean"
+				},
+				"appId": {
+					"type": "string"
+				},
+				"defaultScopes": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"identityTypes": {
+					"type": "array",
+					"items": {
+						"type": "string",
+						"enum": [
+							"MCI",
+							"MEP",
+							"DEMO",
+							"EXT",
+							"NID",
+							"ANONYMOUS"
+						]
+					}
+				},
+				"optionalScopes": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"providerId": {
+					"type": "string"
+				},
+				"requiredScopes": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				}
+			},
+			"title": "IamApplicationInfo"
+		},
+		"IamAuidInfo": {
+			"type": "object",
+			"properties": {
+				"appStatus": {
+					"type": "string",
+					"enum": [
+						"NEW",
+						"ACTIVE",
+						"DELETED"
+					]
+				},
+				"auid": {
+					"type": "string"
+				},
+				"notAllowed": {
+					"type": "boolean"
+				}
+			},
+			"title": "IamAuidInfo"
+		},
+		"IamConsentScopeInfo": {
+			"type": "object",
+			"properties": {
+				"agreed": {
+					"type": "boolean"
+				},
+				"groupId": {
+					"type": "string"
+				},
+				"id": {
+					"type": "string"
+				},
+				"name": {
+					"type": "string"
+				},
+				"optOut": {
+					"type": "boolean"
+				},
+				"version": {
+					"type": "string"
+				}
+			},
+			"title": "IamConsentScopeInfo"
+		},
+		"IamScopeAgreementStatus": {
+			"type": "object",
+			"properties": {
+				"agreed": {
+					"type": "boolean"
+				},
+				"disagreed": {
+					"type": "boolean"
+				},
+				"global": {
+					"type": "boolean"
+				},
+				"optional": {
+					"type": "boolean"
+				},
+				"revokable": {
+					"type": "boolean"
+				},
+				"scopeID": {
+					"type": "string"
+				},
+				"sessionOnly": {
+					"type": "boolean"
+				},
+				"version": {
+					"type": "string"
+				},
+				"wcmid": {
+					"type": "string"
+				}
+			},
+			"title": "IamScopeAgreementStatus"
+		},
+		"IdentityImpl": {
+			"type": "object",
+			"properties": {
+				"adaptiveAuthorizationActive": {
+					"type": "boolean"
+				},
+				"cluid": {
+					"type": "string"
+				},
+				"currentNotificationChannel": {
+					"type": "string",
+					"enum": [
+						"NONE",
+						"SECURITY_SMS",
+						"PRIMARY_EMAIL",
+						"SECONDARY_EMAIL"
+					]
+				},
+				"mci": {
+					"type": "boolean"
+				},
+				"muid": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"nickname": {
+					"type": "string"
+				},
+				"prefferedLanguage": {
+					"$ref": "#/definitions/Locale"
+				},
+				"securityPhoneNumber": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string",
+					"enum": [
+						"NEW",
+						"ACTIVE",
+						"BLOCKED_BY_CLIENT",
+						"BLOCKED_BY_BANK",
+						"DELETED_BY_BANK"
+					]
+				},
+				"type": {
+					"type": "string",
+					"enum": [
+						"MCI",
+						"MEP",
+						"DEMO",
+						"EXT",
+						"NID",
+						"ANONYMOUS"
+					]
+				}
+			},
+			"title": "IdentityImpl"
+		},
+		"IdentityJson": {
+			"type": "object",
+			"properties": {
+				"cluid": {
+					"type": "string"
+				},
+				"muid": {
+					"type": "integer",
+					"format": "int64"
+				},
+				"nickname": {
+					"type": "string"
+				}
+			},
+			"title": "IdentityJson"
+		},
+		"LegacySsoBlob": {
+			"type": "object",
+			"properties": {
+				"bezp_tel": {
+					"type": "string"
+				},
+				"cluid": {
+					"type": "string"
+				},
+				"cluidPO": {
+					"type": "string"
+				},
+				"login_method": {
+					"type": "string",
+					"enum": [
+						"PWD",
+						"SMS",
+						"PKI",
+						"ANYPWD"
+					]
+				},
+				"salt": {
+					"type": "string"
+				},
+				"timestamp": {
+					"type": "string"
+				},
+				"trn": {
+					"type": "string"
+				}
+			},
+			"title": "LegacySsoBlob"
+		},
+		"Locale": {
+			"type": "object",
+			"properties": {
+				"country": {
+					"type": "string"
+				},
+				"displayCountry": {
+					"type": "string"
+				},
+				"displayLanguage": {
+					"type": "string"
+				},
+				"displayName": {
+					"type": "string"
+				},
+				"displayScript": {
+					"type": "string"
+				},
+				"displayVariant": {
+					"type": "string"
+				},
+				"extensionKeys": {
+					"type": "array",
+					"items": {
+						"$ref": "#/definitions/Character"
+					}
+				},
+				"iso3Country": {
+					"type": "string"
+				},
+				"iso3Language": {
+					"type": "string"
+				},
+				"language": {
+					"type": "string"
+				},
+				"script": {
+					"type": "string"
+				},
+				"unicodeLocaleAttributes": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"unicodeLocaleKeys": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					}
+				},
+				"variant": {
+					"type": "string"
+				}
+			},
+			"title": "Locale"
+		},
+		"MepTestErrorResponseObject": {
+			"type": "object",
+			"properties": {
+				"error": {
+					"type": "string"
+				},
+				"error_text": {
+					"type": "string"
+				}
+			},
+			"title": "MepTestErrorResponseObject"
+		},
+		"MethodImpl": {
+			"type": "object",
+			"properties": {
+				"methodStatus": {
+					"type": "string",
+					"enum": [
+						"CREATED",
+						"ACTIVE",
+						"TEMPORARY_BLOCK",
+						"PERMANENT_BLOCK",
+						"EXPIRED"
+					]
+				},
+				"securityLevel": {
+					"type": "string",
+					"enum": [
+						"NIST1",
+						"NIST2",
+						"NIST3",
+						"NIST4"
+					]
+				},
+				"temporaryBlockedUntil": {
+					"type": "string"
+				},
+				"type": {
+					"type": "string",
+					"enum": [
+						"NO_METHOD",
+						"AK",
+						"SMS_CODE",
+						"FREESPEECH",
+						"PASSWORD_MEP",
+						"SMS",
+						"PASSWORD",
+						"SMS_MCI",
+						"CASE_MOBILE_INSTANCE",
+						"CASE_MOBILE_PIN",
+						"PKI",
+						"APIN",
+						"ANYPASSWORD",
+						"GEORGEID",
+						"SMS_IGNORED",
+						"NICKNAME",
+						"VERIFICATION_SMS",
+						"SCA",
+						"PWD_SMS_MEP"
+					]
+				}
+			},
+			"title": "MethodImpl"
+		},
+		"RedirectJson": {
+			"type": "object",
+			"properties": {
+				"url": {
+					"type": "string"
+				}
+			},
+			"title": "RedirectJson"
+		},
+		"TestTokenInfoRequest": {
+			"type": "object",
+			"properties": {
+				"hashedValue": {
+					"type": "string"
+				},
+				"tokenValue": {
+					"type": "string"
+				}
+			},
+			"title": "TestTokenInfoRequest"
+		},
+		"TokenMetadata": {
+			"type": "object",
+			"properties": {
+				"key": {
+					"type": "string"
+				},
+				"value": {
+					"type": "string"
+				},
+				"valueType": {
+					"type": "string"
+				}
+			},
+			"title": "TokenMetadata"
+		}
+	}
+}
