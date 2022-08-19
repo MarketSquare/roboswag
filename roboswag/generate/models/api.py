@@ -1,3 +1,4 @@
+import re
 from collections import defaultdict
 from typing import Dict
 
@@ -29,13 +30,27 @@ class APIModel:
         name = swagger["info"]["title"].replace(" ", "")
         self.name = name
 
+    def get_unique_endpoint_name(self, path, method, method_body):
+        if "operationId" in method_body:
+            return pythonify_name(method_body["operationId"])
+        # split on camelCase and / path
+        parts = re.split("((?<=[a-z])(?=[A-Z])|/)", path)
+        name = method
+        for part in parts:
+            part = re.sub("[/{}]", "", part)
+            part = part.replace("-", "_")
+            if not part:
+                continue
+            name += f"_{part.lower()}"
+        return name
+
     def parse_paths(self, swagger):
         for path, path_body in swagger["paths"].items():
             method: str
             method_body: Dict
             for method, method_body in path_body.items():
                 tag_name = method_body["tags"][0].strip(" -_").title()  # TODO configurable class name
-                unique_name = pythonify_name(method_body["operationId"])  # TODO fallback since its optional
+                unique_name = self.get_unique_endpoint_name(path, method, method_body)
                 summary = method_body.get("summary", "")
                 description = method_body.get("description", "")
                 params = defaultdict(list)

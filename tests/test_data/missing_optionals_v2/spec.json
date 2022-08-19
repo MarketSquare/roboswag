@@ -282,13 +282,12 @@
 				"deprecated": false
 			}
 		},
-		"/perf-test/tokens-count": {
+		"/perf-test/tokensCount": {
 			"get": {
 				"tags": [
 					"perf-test-action"
 				],
 				"summary": "tokensCount",
-				"operationId": "tokensCountUsingGET",
 				"produces": [
 					"text/plain"
 				],
@@ -775,7 +774,6 @@
 					"fed-check-name-action"
 				],
 				"summary": "generateNidIdentity",
-				"operationId": "generateNidIdentityUsingGET",
 				"produces": [
 					"application/json"
 				],
@@ -836,7 +834,6 @@
 					"fed-check-name-action"
 				],
 				"summary": "getScopesToDisplay",
-				"operationId": "getScopesToDisplayUsingGET",
 				"produces": [
 					"*/*"
 				],
