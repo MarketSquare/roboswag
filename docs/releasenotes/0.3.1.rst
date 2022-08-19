@@ -1,0 +1,17 @@
+Roboswag 0.3.1
+===================
+Fixes for missing optional properties in OpenAPi specification file.
+
+You can install the latest available version by running::
+
+    pip install --upgrade roboswag
+
+or to install exactly this version::
+
+    pip install roboswag==0.3.1
+
+
+Fixes
+------
+- Fallback solution to missing optional tag used for endpoint class names
+- Fallback solution to missing optional operationId used for endpoint method names
