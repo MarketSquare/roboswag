@@ -1,4 +1,3 @@
-from pathlib import Path
 from unittest.mock import Mock
 
 import pytest
@@ -12,32 +11,32 @@ def validator():
     return Validate(logger=logger)
 
 
-EXPECTED_ERROR = "I am being expected"
+EXPECTED_TEXT = "I am being expected"
 
 
 @pytest.fixture
-def valid_error():
+def valid_text():
     response = Mock()
-    response.text = EXPECTED_ERROR
+    response.text = EXPECTED_TEXT
     return response
 
 
 @pytest.fixture
-def invalid_error():
+def invalid_text():
     response = Mock()
     response.text = "Not sure where I came from"
     return response
 
 
-def test_valid_error(validator, valid_error):
-    validator.error(valid_error, EXPECTED_ERROR)
+def test_valid_response_text(validator, valid_text):
+    validator.response_as_text(valid_text, EXPECTED_TEXT)
 
 
-def test_invalid_error(validator, invalid_error):
+def test_invalid_response(validator, invalid_text):
     exp_msg = (
-        f"Received response description:\n    '{invalid_error.text}'\n"
+        f"Received response description:\n    '{invalid_text.text}'\n"
         f"does not equal expected:\n"
-        f"    '{EXPECTED_ERROR}'"
+        f"    '{EXPECTED_TEXT}'"
     )
     with pytest.raises(AssertionError, match=exp_msg):
-        validator.error(invalid_error, EXPECTED_ERROR)
+        validator.response_as_text(invalid_text, EXPECTED_TEXT)

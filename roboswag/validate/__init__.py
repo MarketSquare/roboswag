@@ -1,6 +1,6 @@
-from roboswag.validate.errors import ValidateError
 from roboswag.validate.schema import ValidateSchema
+from roboswag.validate.text_response import ValidateTextResponse
 
 
-class Validate(ValidateSchema, ValidateError):
+class Validate(ValidateSchema, ValidateTextResponse):
     pass
