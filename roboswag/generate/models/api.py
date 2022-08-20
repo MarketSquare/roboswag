@@ -55,6 +55,7 @@ class APIModel:
             if not part:
                 continue
             return part.title()
+        return "Root"
 
     def set_source_of_class_name(self, swagger):
         """
