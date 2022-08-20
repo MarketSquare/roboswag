@@ -63,7 +63,7 @@ class APIModel:
         # TODO configurable class name
         for path_body in swagger["paths"].values():
             for method in path_body.values():
-                if "tag" not in method:
+                if "tags" not in method:
                     return self.class_name_from_path
         return self.class_name_from_tag
 
