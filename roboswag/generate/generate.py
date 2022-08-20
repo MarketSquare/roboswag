@@ -95,7 +95,7 @@ def generate_schemas(swagger, output_dir):
     Path(output_dir).mkdir(exist_ok=True)
     print("Generating schemas...")
     schema_files = []
-    for schema_name, schema in swagger["definitions"].items():
+    for schema_name, schema in swagger.get("definitions", {}).items():
         Path(output_dir).mkdir(exist_ok=True)
         schema_file = Path(output_dir, f"{schema_name}.json")
         with open(schema_file, "w") as f:

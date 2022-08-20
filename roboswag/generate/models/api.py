@@ -127,7 +127,7 @@ class APIModel:
         self.tags[tag].endpoints.append(endpoint)
 
     def parse_definitions(self, swagger):
-        for def_name, def_body in swagger["definitions"].items():
+        for def_name, def_body in swagger.get("definitions", {}).items():
             def_type = def_body.get("type", "")
             def_req = def_body.get("required")
             properties = []
