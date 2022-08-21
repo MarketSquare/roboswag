@@ -5,12 +5,12 @@ from typing import List, Optional
 import black
 from jinja2 import Template
 
-from roboswag.generate.models.api import APIModelCreator, get_definitions_from_swagger
+from roboswag.generate.models.api import get_definitions_from_swagger, parse_swagger_specification
 from roboswag.generate.models.definition import Definition
 
 
 def generate_libraries(source, output: Optional[Path] = None):
-    api_model, swagger = APIModelCreator.from_prance(source)
+    api_model, swagger = parse_swagger_specification(source)
     output_dir = api_model.name
     if output is not None:
         output_dir = output / output_dir
