@@ -1,3 +1,6 @@
+from pathlib import Path
+from typing import Optional
+
 import rich_click as click
 
 from roboswag.generate import generate_libraries
@@ -31,6 +34,20 @@ def cli():
     metavar="SWAGGER",
     help="OpenAPI specification file",
 )
-def generate(spec: str):
+@click.option(
+    "-o",
+    "--output-dir",
+    type=click.Path(
+        file_okay=False,
+        dir_okay=True,
+        writable=True,
+        allow_dash=False,
+        path_type=Path,
+    ),
+    show_default="current working directory",
+    metavar="OUTPUT_DIR",
+    help="Output directory path",
+)
+def generate(spec: str, output_dir: Optional[Path] = None):
     """Generate Python libraries."""
-    generate_libraries(spec)
+    generate_libraries(spec, output_dir)
