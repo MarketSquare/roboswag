@@ -38,7 +38,7 @@ class {{ class_name }}(APIModel):
         if validate_payload:
         {%- if endpoint.body.schema %}
             schema = {{ endpoint.body.schema }}
-            self.validate.schema(json.loads(body), schema)
+            self.validate.schema(json.loads({{ endpoint.body.python_name }}), schema)
         {%- endif %}
 
         _body = overwrite_body if overwrite_body else {{ endpoint.body.python_name }}
