@@ -6,7 +6,7 @@ import yaml
 from prance import ResolvingParser
 from prance.convert import convert_spec
 
-from roboswag.generate.models.definition import Definition, Property
+from roboswag.generate.models.definition import Definition, Property, get_definitions_from_swagger
 from roboswag.generate.models.endpoint import Endpoint
 from roboswag.generate.models.parameter import Parameter
 from roboswag.generate.models.response import Response
@@ -24,7 +24,7 @@ class APIModel:
         self.parse_info(swagger)
         self.parse_paths(swagger)
         self.parse_tags(swagger)
-        self.parse_definitions(swagger)
+        self.parse_schemas(swagger)
 
     def parse_info(self, swagger):
         name = swagger["info"]["title"].replace(" ", "")
@@ -127,8 +127,9 @@ class APIModel:
             self.tags[tag] = Tag(tag)
         self.tags[tag].endpoints.append(endpoint)
 
-    def parse_definitions(self, swagger):
-        for def_name, def_body in swagger.get("definitions", {}).items():
+    def parse_schemas(self, swagger):
+        schemas = get_definitions_from_swagger(swagger)
+        for def_name, def_body in schemas.items():
             def_type = def_body.get("type", "")
             def_req = def_body.get("required")
             properties = []
