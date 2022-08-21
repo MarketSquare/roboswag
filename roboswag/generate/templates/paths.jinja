@@ -41,11 +41,8 @@ class {{ class_name }}(APIModel):
             self.validate.schema(json.loads(body), schema)
         {%- endif %}
 
-        _body = {{ endpoint.body.python_name }}
-
-        if overwrite_body:
-            _body = overwrite_body
-{% endif %}
+        _body = overwrite_body if overwrite_body else {{ endpoint.body.python_name }}
+{%- endif %}
         response = self.{{ endpoint.http_method }}({{ "f" if "{" in endpoint.url else "" }}"{{ endpoint.url }}"{% if endpoint.headers %}, headers=headers{% endif %}{% if endpoint.query %}, query=_query{% endif %}{% if endpoint.body %}, body=_body{% endif %}, status=exp_status)
 
         if validate_schema:{% for status_code, resp in endpoint.responses.items() %}
