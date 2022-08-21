@@ -25,7 +25,7 @@ class LibraryGenerator:
         return output / output_dir
 
     def generate(self):
-        self.output_dir.mkdir(exist_ok=True)
+        self.output_dir.mkdir(exist_ok=True, parents=True)
         self.generate_init()
         self.generate_endpoints()
         self.generate_models()
@@ -98,6 +98,6 @@ def blackify_file(source):
     black.format_file_in_place(source, fast=True, mode=black.FileMode(), write_back=black.WriteBack.YES)
 
 
-def generate_libraries(source):
-    generator = LibraryGenerator(source)
+def generate_libraries(source: str, output_dir: Optional[Path]):
+    generator = LibraryGenerator(source, output_dir)
     generator.generate()
