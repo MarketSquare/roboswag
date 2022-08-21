@@ -5,7 +5,7 @@ from typing import List, Optional
 import black
 from jinja2 import Template
 
-from roboswag.generate.models.api import APIModelCreator
+from roboswag.generate.models.api import APIModelCreator, get_definitions_from_swagger
 from roboswag.generate.models.definition import Definition
 
 
@@ -94,8 +94,9 @@ def generate_models(definitions, output_dir):
 def generate_schemas(swagger, output_dir):
     Path(output_dir).mkdir(exist_ok=True)
     print("Generating schemas...")
+    schemas = get_definitions_from_swagger(swagger)
     schema_files = []
-    for schema_name, schema in swagger.get("definitions", {}).items():
+    for schema_name, schema in schemas.items():
         Path(output_dir).mkdir(exist_ok=True)
         schema_file = Path(output_dir, f"{schema_name}.json")
         with open(schema_file, "w") as f:

@@ -15,3 +15,10 @@ class Definition:
         self.type = get_python_type(def_type)
         self.required = required
         self.properties: List[Property] = properties
+
+
+def get_definitions_from_swagger(swagger):
+    """
+    Get resolved schema definition from Swagger file. Supports both OpenAPI v2 and 3.
+    """
+    return swagger.get("definitions", swagger.get("components", {}).get("schemas", {}))
