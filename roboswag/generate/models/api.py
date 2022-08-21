@@ -161,23 +161,12 @@ class APIModel:
             self.definitions[def_name] = definition
 
 
-class APIModelCreator:
-    @staticmethod
-    def from_yaml(source):
-        with open(source) as f:
-            data = yaml.load(f, Loader=yaml.Loader)
-        api_model = APIModel()
-        api_model.parse_swagger(data)
-        return api_model, data
-
-    @staticmethod
-    def from_prance(source, convert_to_3=False):
-        # TODO: support for swagger 3.0 (https://swagger.io/specification/)
-        parser = ResolvingParser(source)
-        swagger = parser.specification
-        # convert to OpenAPI 3.x if swagger is in version 2.x
-        if swagger.get("swagger") and convert_to_3:
-            swagger = convert_spec(swagger).specification
-        api_model = APIModel()
-        api_model.parse_swagger(swagger)
-        return api_model, swagger
+def parse_swagger_specification(source, convert_to_3=False):
+    parser = ResolvingParser(source)
+    swagger = parser.specification
+    # convert to OpenAPI 3.x if swagger is in version 2.x
+    if swagger.get("swagger") and convert_to_3:
+        swagger = convert_spec(swagger).specification
+    api_model = APIModel()
+    api_model.parse_swagger(swagger)
+    return api_model, swagger
