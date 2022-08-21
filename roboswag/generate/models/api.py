@@ -68,6 +68,25 @@ class APIModel:
                     return self.class_name_from_path
         return self.class_name_from_tag
 
+    @staticmethod
+    def get_body(params, method_body):
+        """
+        Get optional body of the request.
+        For OpenAPI v2 body is part of the parameters (with in: body).
+        For OpenAPi v3 body is in separate property requestBody.
+        # TODO: We only support application/json type of the body
+        """
+        if "body" in params:
+            # TODO Can it be more than one? If not, should we use the same container as for headers & query?
+            return params["body"][0]
+        if "requestBody" in method_body:
+            schema = method_body["requestBody"].get("content", {}).get("application/json", {})
+            if not schema:
+                return None
+            return Parameter(
+                "body", default="None", param_type=None, description=None, required=None, schema=schema  # TODO
+            )
+
     def parse_paths(self, swagger):
         get_class_name = self.set_source_of_class_name(swagger)
         for path, path_body in swagger["paths"].items():
@@ -99,7 +118,7 @@ class APIModel:
                         headers=resp.get("headers"),
                         schema=resp.get("schema"),
                     )
-                body = params["body"][0] if params["body"] else None
+                body = self.get_body(params, method_body)
                 endpoint = Endpoint(
                     unique_name,
                     method,
