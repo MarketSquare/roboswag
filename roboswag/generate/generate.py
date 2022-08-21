@@ -1,107 +1,103 @@
 import json
 from pathlib import Path
-from typing import List, Optional
+from typing import Optional
 
 import black
 from jinja2 import Template
 
 from roboswag.generate.models.api import get_definitions_from_swagger, parse_swagger_specification
-from roboswag.generate.models.definition import Definition
 
 
-def generate_libraries(source, output: Optional[Path] = None):
-    api_model, swagger = parse_swagger_specification(source)
-    output_dir = api_model.name
-    if output is not None:
-        output_dir = output / output_dir
-    Path(output_dir).mkdir(exist_ok=True)
+class LibraryGenerator:
+    def __init__(self, source, output: Optional[Path] = None):
+        self.source = source
+        self.parent_dir = Path(__file__).parent
+        api_model, swagger = parse_swagger_specification(self.source)
+        self.api_model = api_model
+        self.swagger = swagger
+        self.output_dir = self.resolve_output_dir(output)
+        self.unformatted_files = []
 
-    init_files = generate_init(swagger, output_dir)
-    blackify_files(init_files)
+    def resolve_output_dir(self, output: Optional[Path]):
+        output_dir = self.api_model.name
+        if output is None:
+            return Path(output_dir)
+        return output / output_dir
 
-    endpoints_dir = Path(output_dir) / Path("endpoints")
-    endpoint_files = generate_endpoints(api_model.tags, endpoints_dir)
-    blackify_files(endpoint_files)
+    def generate(self):
+        self.output_dir.mkdir(exist_ok=True)
+        self.generate_init()
+        self.generate_endpoints()
+        self.generate_models()
+        self.generate_schemas()
+        self.format_files()
 
-    models_dir = Path(output_dir) / Path("models")
-    model_files = generate_models(api_model.definitions, models_dir)
-    blackify_files(model_files)
+    def format_files(self):
+        for path in self.unformatted_files:
+            blackify_file(path)
+        self.unformatted_files = []
 
-    schemas_dir = Path(output_dir) / Path("schemas")
-    generate_schemas(swagger, schemas_dir)
+    def generate_init(self):
+        swagger_version = self.swagger.get("openapi") or self.swagger.get("swagger")
+        api_init_template = self.parent_dir / "templates" / "api_init.jinja"
+        with open(api_init_template) as f:
+            template = Template(f.read()).render(swagger_version=swagger_version, infos=self.swagger["info"])
+        init_file = self.output_dir / "__init__.py"
+        with open(init_file, "w") as f:
+            f.write(template)
+        print(f"Generated '{init_file}' file")
+        self.unformatted_files.append(init_file)
 
+    def generate_endpoints(self):
+        endpoints_dir = self.output_dir / "endpoints"
+        Path(endpoints_dir).mkdir(exist_ok=True)
+        print("Generating endpoints...")
+        for tag in self.api_model.tags.values():
+            paths_template = self.parent_dir / "templates" / "paths.jinja"
+            with open(paths_template) as f:
+                template = Template(f.read()).render(
+                    class_name=tag.name,
+                    endpoints=tag.endpoints,
+                    description=tag.description,
+                )
+            endpoint_file = endpoints_dir / f"{tag.name}.py"
+            with open(endpoint_file, "w") as f:
+                f.write(template)
+            print(f"Generated '{endpoint_file}' file")
+            self.unformatted_files.append(endpoint_file)
 
-def blackify_files(path_list: List[Path]):
-    for path in path_list:
-        blackify_file(path)
+    def generate_models(self):
+        models_dir = self.output_dir / "models"
+        Path(models_dir).mkdir(exist_ok=True)
+        print("Generating models...")
+        for definition in self.api_model.definitions.values():
+            models_template = self.parent_dir / "templates" / "models.jinja"
+            with open(models_template) as f:
+                template = Template(f.read()).render(class_name=definition.name, properties=definition.properties)
+            model_file = models_dir / f"{definition.name}.py"
+            with open(model_file, "w") as f:
+                f.write(template)
+            print(f"Generated '{model_file}' file")
+            self.unformatted_files.append(model_file)
+
+    def generate_schemas(self):
+        schemas_dir = self.output_dir / "schemas"
+        Path(schemas_dir).mkdir(exist_ok=True)
+        print("Generating schemas...")
+        schemas = get_definitions_from_swagger(self.swagger)
+        for schema_name, schema in schemas.items():
+            schema_file = schemas_dir / f"{schema_name}.json"
+            with open(schema_file, "w") as f:
+                f.write(json.dumps(schema, indent=4))
+                f.write("\n")
+            print(f"Generated '{schema_file}' file")
+            self.unformatted_files.append(schema_file)
 
 
 def blackify_file(source):
     black.format_file_in_place(source, fast=True, mode=black.FileMode(), write_back=black.WriteBack.YES)
 
 
-def generate_init(swagger, output_dir):
-    parent_dir = Path(__file__).parent
-    Path(output_dir).mkdir(exist_ok=True)
-    swagger_version = swagger.get("openapi") or swagger.get("swagger")
-    with open(Path(parent_dir, "templates/api_init.jinja")) as f:
-        template = Template(f.read()).render(swagger_version=swagger_version, infos=swagger["info"])
-    init_file = Path(output_dir, f"__init__.py")
-    with open(init_file, "w") as f:
-        f.write(template)
-    print(f"Generated '{init_file}' file")
-    return [init_file]
-
-
-def generate_endpoints(tags, output_dir):
-    parent_dir = Path(__file__).parent
-    Path(output_dir).mkdir(exist_ok=True)
-    print("Generating endpoints...")
-    endpoint_files = []
-    for tag in tags.values():
-        with open(Path(parent_dir, "templates/paths.jinja")) as f:
-            template = Template(f.read()).render(
-                class_name=tag.name,
-                endpoints=tag.endpoints,
-                description=tag.description,
-            )
-        endpoint_file = Path(output_dir, f"{tag.name}.py")
-        with open(endpoint_file, "w") as f:
-            f.write(template)
-        print(f"Generated '{endpoint_file}' file")
-        endpoint_files.append(endpoint_file)
-    return endpoint_files
-
-
-def generate_models(definitions, output_dir):
-    parent_dir = Path(__file__).parent
-    Path(output_dir).mkdir(exist_ok=True)
-    definition: Definition
-    print("Generating models...")
-    model_files = []
-    for definition in definitions.values():
-        Path(output_dir).mkdir(exist_ok=True)
-        with open(Path(parent_dir, "templates/models.jinja")) as f:
-            template = Template(f.read()).render(class_name=definition.name, properties=definition.properties)
-        model_file = Path(output_dir, f"{definition.name}.py")
-        with open(model_file, "w") as f:
-            f.write(template)
-        print(f"Generated '{model_file}' file")
-        model_files.append(model_file)
-    return model_files
-
-
-def generate_schemas(swagger, output_dir):
-    Path(output_dir).mkdir(exist_ok=True)
-    print("Generating schemas...")
-    schemas = get_definitions_from_swagger(swagger)
-    schema_files = []
-    for schema_name, schema in schemas.items():
-        Path(output_dir).mkdir(exist_ok=True)
-        schema_file = Path(output_dir, f"{schema_name}.json")
-        with open(schema_file, "w") as f:
-            f.write(json.dumps(schema, indent=4))
-            f.write("\n")
-        print(f"Generated '{schema_file}' file")
-        schema_files.append(schema_file)
-    return schema_files
+def generate_libraries(source):
+    generator = LibraryGenerator(source)
+    generator.generate()
