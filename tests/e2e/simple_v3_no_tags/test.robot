@@ -5,3 +5,6 @@ Library  ..${/}results${/}simple_v3_no_tags${/}RoboswagTestAPI${/}endpoints${/}I
 *** Test Cases ***
 Simple test
     Read Item Items Item Id Get    1
+
+Invalid input
+    Read Item Items Item Id Get    string    exp_status=422
