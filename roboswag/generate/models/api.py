@@ -2,7 +2,6 @@ import re
 from collections import defaultdict
 from typing import Dict
 
-import yaml
 from prance import ResolvingParser
 from prance.convert import convert_spec
 
@@ -12,6 +11,33 @@ from roboswag.generate.models.parameter import Parameter
 from roboswag.generate.models.response import Response
 from roboswag.generate.models.tag import Tag
 from roboswag.generate.models.utils import get_python_type, pythonify_name
+
+
+def get_schema(param):
+    return param.get("schema") or get_schema_openapi_v3(param)
+
+
+def get_schema_openapi_v3(param):
+    return param.get("content", {}).get("application/json", {}).get("schema", {})
+
+
+def get_body(params, method_body):
+    """
+    Get optional body of the request.
+    For OpenAPI v2 body is part of the parameters (with in: body).
+    For OpenAPi v3 body is in separate property requestBody.
+    # TODO: We only support application/json type of the body
+    """
+    if "body" in params:
+        # TODO Can it be more than one? If not, should we use the same container as for headers & query?
+        return params["body"][0]
+    if "requestBody" in method_body:
+        schema = get_schema_openapi_v3(method_body["requestBody"])
+        if not schema:
+            return None
+        return Parameter(
+            "body", default="None", param_type=None, description=None, required=None, schema=schema  # TODO
+        )
 
 
 class APIModel:
@@ -68,25 +94,6 @@ class APIModel:
                     return self.class_name_from_path
         return self.class_name_from_tag
 
-    @staticmethod
-    def get_body(params, method_body):
-        """
-        Get optional body of the request.
-        For OpenAPI v2 body is part of the parameters (with in: body).
-        For OpenAPi v3 body is in separate property requestBody.
-        # TODO: We only support application/json type of the body
-        """
-        if "body" in params:
-            # TODO Can it be more than one? If not, should we use the same container as for headers & query?
-            return params["body"][0]
-        if "requestBody" in method_body:
-            schema = method_body["requestBody"].get("content", {}).get("application/json", {})
-            if not schema:
-                return None
-            return Parameter(
-                "body", default="None", param_type=None, description=None, required=None, schema=schema  # TODO
-            )
-
     def parse_paths(self, swagger):
         get_class_name = self.set_source_of_class_name(swagger)
         for path, path_body in swagger["paths"].items():
@@ -108,7 +115,7 @@ class APIModel:
                             else None,
                             description=param.get("description"),
                             required=param.get("required"),
-                            schema=param.get("schema"),
+                            schema=get_schema(param),
                         )
                     )
                 responses = dict()
@@ -116,9 +123,9 @@ class APIModel:
                     responses[status_code] = Response(
                         description=resp.get("description"),
                         headers=resp.get("headers"),
-                        schema=resp.get("schema"),
+                        schema=get_schema(resp),
                     )
-                body = self.get_body(params, method_body)
+                body = get_body(params, method_body)
                 endpoint = Endpoint(
                     unique_name,
                     method,

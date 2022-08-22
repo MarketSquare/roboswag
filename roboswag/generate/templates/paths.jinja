@@ -52,10 +52,12 @@ class {{ class_name }}(APIModel):
                 self.validate.schema(response.json(), schema)
         {%- elif status_code != "default" %}
             {% if not loop.first %}el{% endif %}if response.status_code == {{ status_code }}:
-                self.validate.response_as_text(response, "{{ resp.description }}")
+                # TODO self.validate.response_as_text(response, "FILL EXPECTED MESSAGE")
+                pass
         {%- else %}
             {% if not loop.first %}el{% endif %}if response.status_code == "default":
-                self.validate.response_as_text(response, "{{ resp.description }}")
+                # TODO self.validate.response_as_text(response, "FILL EXPECTED MESSAGE")
+                pass
         {%- endif %}{% endfor %}
             else:
                 logging.error(f"Received status code ({response.status_code}) is not expected by the API specification")
