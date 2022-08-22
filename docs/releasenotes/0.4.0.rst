@@ -1,0 +1,41 @@
+Roboswag 0.4.0
+===================
+Major improvements for our internal test framework and utilities.
+We also added support for openAPI v3 (in json and yaml format).
+
+You can install the latest available version by running::
+
+    pip install --upgrade roboswag
+
+or to install exactly this version::
+
+    pip install roboswag==0.4.0
+
+OpenAPI v3 support
+-------------------
+Roboswag is now tested with openAPI v3 and supports it (`#24 <https://github.com/MarketSquare/roboswag/issues/24>`_).
+It also work with both ``json`` and ``yaml`` formats (`#25 <https://github.com/MarketSquare/roboswag/issues/25>`_).
+
+Other
+-----
+- It is now possible to generate test libraries under selected path using ``--output-dir`` option (`#55 <https://github.com/MarketSquare/roboswag/issues/55>`_)
+- Generated test libraries are now more compact thanks to minor adjustments of whitespace (`#53 <https://github.com/MarketSquare/roboswag/issues/53>`_)
+- Major refactor of the test library generation code (`#54 <https://github.com/MarketSquare/roboswag/issues/54>`_)
+
+Fixes
+------
+- Handle optional properties from openAPI v3 (`#51 <https://github.com/MarketSquare/roboswag/issues/51>`_)
+- Renamed "validate.error" to "validate.response_as_text" since it can be used for successfull responses as well (`#51 <https://github.com/MarketSquare/roboswag/issues/51>`_)
+- Description field of the responses is now not used for validation - we are creating comment with TODO message instead (`#56 <https://github.com/MarketSquare/roboswag/issues/56>`_)
+
+E2E
+----
+Created E2E test framework (`#51 <https://github.com/MarketSquare/roboswag/issues/51>`_, `#57 <https://github.com/MarketSquare/roboswag/issues/57>`_).
+It allows us to define our own, small APIs and then:
+
+- we generate openAPI specification file,
+- roboswag use this file to generate test libraries,
+- test framework starts API server,
+- test runs robot tests using generated test libraries against API
+
+Thanks for that we can replicate full user workflow and isolate different types of API configuration.

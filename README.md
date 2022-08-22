@@ -69,12 +69,10 @@ Now you can just create a test file, import desired endpoint and start automatin
 
 The tool is already able to generate libraries but...
 - Not all fields from the swagger specification may be supported. This means that a specific file may break the tool 
-  and flood the terminal with stack trace
-- Also, the support for Swagger V3 is not yet implemented
+  and flood the terminal with stack trace (we will be really grateful to receive bug issues in our Github project!)
 - Authorization to access the API is not yet fully covered
-- There is not much to be configured here - it works always the same
+- There is not much to be configured here - it always works the same
 - There is no real documentation apart from this file
-- There are nearly no tests assuring this tool works correctly
 
 Please be forgiving and submit an issue, if you struggle with something or just contact us on our
 [Slack channel](https://robotframework.slack.com/archives/C035KMZ2FGA). It's more than welcome also to support us by 
