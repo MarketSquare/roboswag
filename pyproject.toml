@@ -1,6 +1,6 @@
 [tool.poetry]
 name="roboswag"
-version = "0.3.1"
+version = "0.4.0"
 description = "Test framework for auto-generating libraries from OpenAPI specification file."
 license = "Apache-2.0"
 authors = ["Mateusz Nojek <matnojek@gmail.com>", "Bartlomiej Hirsz <bartek.hirsz@gmail.com>"]
