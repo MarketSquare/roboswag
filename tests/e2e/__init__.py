@@ -37,7 +37,7 @@ def generate_openapi(app, spec_path: Path):
         tags=app.openapi_tags,
     )
     with open(spec_path, "w") as fp:
-        json.dump(spec, fp)
+        json.dump(spec, fp, indent=4)
 
 
 def get_api_server(app):
