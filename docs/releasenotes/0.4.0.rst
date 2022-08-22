@@ -14,7 +14,7 @@ or to install exactly this version::
 OpenAPI v3 support
 -------------------
 Roboswag is now tested with openAPI v3 and supports it (`#24 <https://github.com/MarketSquare/roboswag/issues/24>`_).
-It also work with both ``json`` and ``yaml`` formats (`#25 <https://github.com/MarketSquare/roboswag/issues/25>`_).
+It also works with both ``json`` and ``yaml`` formats (`#25 <https://github.com/MarketSquare/roboswag/issues/25>`_).
 
 Other
 -----
@@ -25,7 +25,7 @@ Other
 Fixes
 ------
 - Handle optional properties from openAPI v3 (`#51 <https://github.com/MarketSquare/roboswag/issues/51>`_)
-- Renamed "validate.error" to "validate.response_as_text" since it can be used for successfull responses as well (`#51 <https://github.com/MarketSquare/roboswag/issues/51>`_)
+- Renamed "validate.error" to "validate.response_as_text" since it can be used for successful responses as well (`#51 <https://github.com/MarketSquare/roboswag/issues/51>`_)
 - Description field of the responses is now not used for validation - we are creating comment with TODO message instead (`#56 <https://github.com/MarketSquare/roboswag/issues/56>`_)
 
 E2E
