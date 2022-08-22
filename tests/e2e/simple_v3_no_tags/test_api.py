@@ -19,5 +19,5 @@ def read_item(item_id: int, q: Union[str, None] = None):
 
 
 def test_e2e():
-    test_name = Path(__file__).name
+    test_name = Path(__file__).parent.name
     run_e2e(app, test_name)
