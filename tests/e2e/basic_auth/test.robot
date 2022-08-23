@@ -3,5 +3,8 @@ Library  ..${/}results${/}basic_auth${/}RoboswagTestAPI${/}endpoints${/}Users.py
 
 
 *** Test Cases ***
-Get user
-    Users Me
+Missing auth
+    Users Me    exp_status=401    validate_schema=False
+
+User and password from kwargs
+    Users Me    user=testuser    password=1234pass
