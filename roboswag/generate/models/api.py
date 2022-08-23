@@ -1,6 +1,6 @@
 import re
 from collections import defaultdict
-from typing import Dict
+from typing import Dict, Optional
 
 from prance import ResolvingParser
 from prance.convert import convert_spec
@@ -45,12 +45,14 @@ class APIModel:
         self.name: str = ""
         self.tags: Dict[str, Tag] = {}
         self.definitions: Dict[str, Definition] = {}
+        self.authentication: Optional[str] = None
 
     def parse_swagger(self, swagger):
         self.parse_info(swagger)
         self.parse_paths(swagger)
         self.parse_tags(swagger)
         self.parse_schemas(swagger)
+        self.parse_authentication(swagger)
 
     def parse_info(self, swagger):
         name = swagger["info"]["title"].replace(" ", "")
@@ -166,6 +168,17 @@ class APIModel:
 
             definition = Definition(def_name, def_type=def_type, properties=properties, required=def_req)
             self.definitions[def_name] = definition
+
+    def parse_authentication(self, swagger):
+        # TODO we should check what security schemes applies to which endpoints
+        # it could be that entire path does not need auth, while other needs it etc
+        security_schemes = swagger.get("components", {}).get("securitySchemes", {})
+        if not security_schemes:
+            return
+        for name, scheme in security_schemes.items():
+            if scheme.get("type", "") == "http" and scheme.get("scheme", "") == "basic":
+                self.authentication = "BasicAuth"
+                return
 
 
 def parse_swagger_specification(source, convert_to_3=False):

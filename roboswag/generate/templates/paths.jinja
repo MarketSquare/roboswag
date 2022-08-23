@@ -2,15 +2,16 @@ import logging
 import json
 
 from roboswag import APIModel
+{% if authentication %}from roboswag.auth import {{ authentication }}{% endif %}
 
 
 class {{ class_name }}(APIModel):
 {% if description %}    """**Description:** {{ description }}"""
 {% endif %}
     def __init__(self, url):
-        super().__init__(base_url=url)
+        super().__init__(base_url=url{% if authentication %}, authentication={{ authentication }}{% endif %})
 {% for endpoint in endpoints %}
-{{ endpoint.method_signature }}{% if endpoint.body %}, validate_payload=True, overwrite_body=None{% endif %}{% if endpoint.headers %}, overwrite_headers=None{% endif %}{% if endpoint.query %}, overwrite_query=None{% endif %}):
+{{ endpoint.method_signature }}{% if endpoint.body %}, validate_payload=True, overwrite_body=None{% endif %}{% if endpoint.headers %}, overwrite_headers=None{% endif %}{% if endpoint.query %}, overwrite_query=None{% endif %}, **kwargs):
 {% if (endpoint.summary or endpoint.description) %}        """{% if endpoint.summary %}
         **Summary:** {{ endpoint.summary }}{% endif %}{% if endpoint.description %}
 
@@ -43,7 +44,7 @@ class {{ class_name }}(APIModel):
 
         _body = overwrite_body if overwrite_body else {{ endpoint.body.python_name }}
 {%- endif %}
-        response = self.{{ endpoint.http_method }}({{ "f" if "{" in endpoint.url else "" }}"{{ endpoint.url }}"{% if endpoint.headers %}, headers=headers{% endif %}{% if endpoint.query %}, query=_query{% endif %}{% if endpoint.body %}, body=_body{% endif %}, status=exp_status)
+        response = self.{{ endpoint.http_method }}({{ "f" if "{" in endpoint.url else "" }}"{{ endpoint.url }}"{% if endpoint.headers %}, headers=headers{% endif %}{% if endpoint.query %}, query=_query{% endif %}{% if endpoint.body %}, body=_body{% endif %}, status=exp_status, **kwargs)
 
         if validate_schema:{% for status_code, resp in endpoint.responses.items() %}
         {%- if resp.schema %}

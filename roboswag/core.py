@@ -17,7 +17,7 @@ class APIModel:
         content_type="application/json",
         proxies=None,
         allow_redirects=True,
-        authorization=TokenHandler,
+        authentication=None,
     ):
         # Set headers from init too (or reuse auth)
         self.base_url = base_url
@@ -29,7 +29,7 @@ class APIModel:
         self.allow_redirects = allow_redirects
         if proxies is not None:  # TODO urllib have autodetect proxy - allow to use it
             self.session.proxies.update(proxies)
-        self.authorization = authorization
+        self.authentication = authentication
         self.logger = Logger()
         self.validate = Validate(self.logger)
         if headers is not None:
@@ -38,7 +38,7 @@ class APIModel:
     def send_request(self, method, url, status=None, headers=None, body=None, query=None, **kwargs):
         headers = self.trim_empty(headers)
         query = self.trim_empty(query)
-        # auth = self.authorization(**kwargs) if self.authorization is not None else None
+        auth = self.authentication(**kwargs) if self.authentication is not None else None
         content_type = kwargs.get("content-type", self.content_type)
         if content_type is not None:
             headers["Content-Type"] = content_type
@@ -49,7 +49,7 @@ class APIModel:
             headers=headers,
             json=body,
             params=query,
-            # auth=auth,
+            auth=auth,
             allow_redirects=self.allow_redirects,
         )
         # TODO quiet mode

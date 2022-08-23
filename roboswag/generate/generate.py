@@ -57,6 +57,7 @@ class LibraryGenerator:
             with open(paths_template) as f:
                 template = Template(f.read()).render(
                     class_name=tag.name,
+                    authentication=self.api_model.authentication,
                     endpoints=tag.endpoints,
                     description=tag.description,
                 )
