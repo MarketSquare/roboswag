@@ -1,13 +1,13 @@
-.. _authorization:
+.. _authentication:
 
-Authorization
-==============
-Roboswag can handle authorization for you.
-For now it supports only ``HTTP Basic Auth`` and custom authorization but more will be added in the future.
+Authentication
+===============
+Roboswag can handle authentication for you.
+For now it supports only ``HTTP Basic Auth`` and custom authentication but more will be added in the future.
 
-Selecting authorization type for endpoint
+Selecting authentication type for endpoint
 ------------------------------------------
-The type of the authorization to use is automatically detected from the openAPI documentation and it's passed in
+The type of the authentication to use is automatically detected from the openAPI documentation and it's passed in
 endpoint main class ``__init__`` method:
 
 .. code:: python
@@ -20,12 +20,12 @@ endpoint main class ``__init__`` method:
         def __init__(self, url):
             super().__init__(base_url=url, authentication=BasicAuth)
 
-If your documentation does not have authorization included or it's not discovered properly you can
-modify endpoint class manually or use ``-a / --authorization`` option to overwrite it::
+If your documentation does not have authentication included or it's not discovered properly you can
+modify endpoint class manually or use ``-a / --auth`` option to overwrite it::
 
-    roboswag generate -s spec.json --authorization BasicAuth
+    roboswag generate -s spec.json --auth BasicAuth
 
-Use ``disable`` to disable authorization::
+Use ``disable`` to disable authentication::
 
     roboswag generate -s spec.json -a disable
 
@@ -67,17 +67,17 @@ from the current scope:
         Set Test Variable    ${password}    abc
         Users Me  # ${USER} and ${password} variables will be automatically used
 
-Custom authorization
+Custom authentication
 ----------------------
-You can define your own authorization class and pass it to ``APIModel`` to be used for your
+You can define your own authentication class and pass it to ``APIModel`` to be used for your
 requests. Since Roboswag is using ``requests`` under the hood it uses the same principles described
 in the `requests documentation <https://requests.readthedocs.io/en/latest/user/authentication/#new-forms-of-authentication>`_.
 
-For the sake of the example let's assume you want to have ``HTTP Basic Auth`` type of the authorization.
+For the sake of the example let's assume you want to have ``HTTP Basic Auth`` type of the authentication.
 You want to run your API tests on three different environments (dev, test, preprod) which require
 different level of security. Depending on the environment type we need to:
 
-- not use authorization for ``dev`` environment,
+- not use authentication for ``dev`` environment,
 - use fixed user and password for ``test`` environment
 - use user and password from kwargs/scoped variable for ``preprod`` environment
 
@@ -106,7 +106,7 @@ from ``kwargs`` or the Robot Framework scope:
             raise MissingParameter(name) from None
         return value
 
-We can reuse the above code to create following custom authorization:
+We can reuse the above code to create following custom authentication:
 
 .. code:: python
 
@@ -122,7 +122,7 @@ We can reuse the above code to create following custom authorization:
                 password = get_from_kwargs_or_robot(kwargs, "password")
             super().__init__(user, password)
 
-Finally we need to pass authorization class to APIModel parent class:
+Finally we need to pass authentication class to APIModel parent class:
 
 .. code:: python
 

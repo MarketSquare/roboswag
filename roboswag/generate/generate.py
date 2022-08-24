@@ -9,14 +9,14 @@ from roboswag.generate.models.api import get_definitions_from_swagger, parse_swa
 
 
 class LibraryGenerator:
-    def __init__(self, source, output: Optional[Path], authorization):
+    def __init__(self, source, output: Optional[Path], authentication):
         self.source = source
         self.parent_dir = Path(__file__).parent
         api_model, swagger = parse_swagger_specification(self.source)
         self.api_model = api_model
         self.swagger = swagger
         self.output_dir = self.resolve_output_dir(output)
-        self.default_auth = authorization
+        self.default_auth = authentication
         self.unformatted_files = []
 
     def resolve_output_dir(self, output: Optional[Path]):
@@ -107,6 +107,6 @@ def blackify_file(source):
     black.format_file_in_place(source, fast=True, mode=black.FileMode(), write_back=black.WriteBack.YES)
 
 
-def generate_libraries(source: str, output_dir: Optional[Path], authorization: Any):
-    generator = LibraryGenerator(source, output_dir, authorization)
+def generate_libraries(source: str, output_dir: Optional[Path], authentication: Any):
+    generator = LibraryGenerator(source, output_dir, authentication)
     generator.generate()
