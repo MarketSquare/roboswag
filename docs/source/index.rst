@@ -5,4 +5,4 @@ Roboswag documentation
    :maxdepth: 2
    :hidden:
 
-   authorization.rst
+   authentication.rst

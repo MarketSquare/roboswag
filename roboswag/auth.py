@@ -1,14 +1,3 @@
-"""
-You can use your own auth class when defining your API endpoint handler:
-    from webapi.auth import HTTPBasicAuth
-
-    class SomeAPI(APICore):
-        def __init__(self, base_url, *args, **kwargs):
-            super().__init__(base_url, *args, authorization=HTTPBasicAuth, **kwargs)
-
-See https://copdips.com/2019/04/creating-custom-python-request-auth-class.html for example how you can
-define custom auth classes.
-"""
 from requests.auth import HTTPBasicAuth
 from robot.libraries.BuiltIn import BuiltIn
 

@@ -11,7 +11,7 @@ CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
 
 
 class AuthBackend(click.ParamType):
-    name = "authorization"
+    name = "auth"
 
     def convert(self, value, param, ctx):
         backends = {backend.lower(): auth_class for backend, auth_class in AUTH_BACKENDS.items()}
@@ -20,7 +20,7 @@ class AuthBackend(click.ParamType):
             return backends[normalized]
         backend_names = "\n    ".join(backend for backend in AUTH_BACKENDS.keys())
         self.fail(
-            f"Invalid authorization backend: {value}. Authorization can be only one of:\n    {backend_names}",
+            f"Invalid authentication backend: {value}. Authentication can be only one of:\n    {backend_names}",
             param,
             ctx,
         )
@@ -67,12 +67,12 @@ def cli():
 )
 @click.option(
     "-a",
-    "--authorization",
+    "--auth",
     type=AuthBackend(),
-    show_default="Authorization found in the specification",
+    show_default="Authentication found in the specification",
     metavar="AUTH_CLASS",
-    help="Overwrite default authorization class",
+    help="Overwrite default authentication class",
 )
-def generate(spec: str, output_dir: Optional[Path] = None, authorization: Optional[Path] = None):
+def generate(spec: str, output_dir: Optional[Path] = None, auth: Optional[Path] = None):
     """Generate Python libraries."""
-    generate_libraries(spec, output_dir, authorization)
+    generate_libraries(spec, output_dir, auth)
