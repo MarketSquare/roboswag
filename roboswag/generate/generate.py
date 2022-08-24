@@ -1,6 +1,6 @@
 import json
 from pathlib import Path
-from typing import Optional
+from typing import Any, Optional
 
 import black
 from jinja2 import Template
@@ -9,13 +9,14 @@ from roboswag.generate.models.api import get_definitions_from_swagger, parse_swa
 
 
 class LibraryGenerator:
-    def __init__(self, source, output: Optional[Path] = None):
+    def __init__(self, source, output: Optional[Path], authorization):
         self.source = source
         self.parent_dir = Path(__file__).parent
         api_model, swagger = parse_swagger_specification(self.source)
         self.api_model = api_model
         self.swagger = swagger
         self.output_dir = self.resolve_output_dir(output)
+        self.default_auth = authorization
         self.unformatted_files = []
 
     def resolve_output_dir(self, output: Optional[Path]):
@@ -48,6 +49,13 @@ class LibraryGenerator:
         print(f"Generated '{init_file}' file")
         self.unformatted_files.append(init_file)
 
+    def get_api_auth(self):
+        if self.default_auth is None:
+            return self.api_model.authentication
+        if self.default_auth == "disable":
+            return None
+        return self.default_auth
+
     def generate_endpoints(self):
         endpoints_dir = self.output_dir / "endpoints"
         Path(endpoints_dir).mkdir(exist_ok=True)
@@ -57,7 +65,7 @@ class LibraryGenerator:
             with open(paths_template) as f:
                 template = Template(f.read()).render(
                     class_name=tag.name,
-                    authentication=self.api_model.authentication,
+                    authentication=self.get_api_auth(),
                     endpoints=tag.endpoints,
                     description=tag.description,
                 )
@@ -99,6 +107,6 @@ def blackify_file(source):
     black.format_file_in_place(source, fast=True, mode=black.FileMode(), write_back=black.WriteBack.YES)
 
 
-def generate_libraries(source: str, output_dir: Optional[Path]):
-    generator = LibraryGenerator(source, output_dir)
+def generate_libraries(source: str, output_dir: Optional[Path], authorization: Any):
+    generator = LibraryGenerator(source, output_dir, authorization)
     generator.generate()
