@@ -43,3 +43,9 @@ class BasicAuth(HTTPBasicAuth):
         user = get_from_kwargs_or_robot(kwargs, "user")
         password = get_from_kwargs_or_robot(kwargs, "password")
         super().__init__(user, password)
+
+
+AUTH_BACKENDS = {
+    "disable": "disable",
+    "basicauth": "BasicAuth",
+}
