@@ -94,7 +94,7 @@ Let's see how Roboswag internal ``BasicAuth`` is implemented:
             super().__init__(user, password)
 
 ``get_from_kwargs_or_robot`` is a convenient method for retrieving variable value
-from kwargs or the Robot Framework scope:
+from ``kwargs`` or the Robot Framework scope:
 
 .. code:: python
 
