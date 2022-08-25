@@ -24,22 +24,9 @@ Click [here for v3 documentation](https://swagger.io/specification/) and
 
 ## Installation
 
-> **Note**
->
-> The PyPI package will be released when Beta version is out.
+You can install Roboswag simply by running::
 
-First, you need to install Roboswag, and there are currently 2 ways to do it:
-- you can clone the repository, go to the main `roboswag` directory and install the tool locally:
-
-```commandline
-pip install .
-```
-
-- you can install the tool directly from GitHub's source code:
-
-```commandline
-pip install -U git+https://github.com/MarketSquare/roboswag.git
-```
+    pip install roboswag
 
 ## Usage
 
