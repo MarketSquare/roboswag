@@ -1,0 +1,68 @@
+{
+	"openapi": "3.0.2",
+	"info": {
+		"title": "Swagger Petstore - OpenAPI 3.0",
+		"description": "This is a sample Pet Store Server based on the OpenAPI 3.0 specification.  You can find out more about\nSwagger at [http://swagger.io](http://swagger.io). In the third iteration of the pet store, we've switched to the design first approach!\nYou can now help us improve the API whether it's by making changes to the definition itself or to the code.\nThat way, with time, we can improve the API in general, and expose some of the new features in OAS3.\n\nSome useful links:\n- [The Pet Store repository](https://github.com/swagger-api/swagger-petstore)\n- [The source API definition for the Pet Store](https://github.com/swagger-api/swagger-petstore/blob/master/src/main/resources/openapi.yaml)",
+		"version": "1.0.6"
+	},
+	"paths": {
+		"/pet": {
+			"post": {
+				"operationId": "addPet",
+				"requestBody": {
+					"description": "Create a new pet in the store",
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Pet"
+							}
+						}
+					},
+					"required": true
+				},
+				"responses": {
+					"200": {
+						"description": "Successful operation",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/Pet"
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	},
+	"components": {
+		"schemas": {
+			"Pet": {
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "integer",
+						"format": "int64",
+						"example": 10
+					},
+					"name": {
+						"type": "string",
+						"example": "doggie"
+					},
+					"status": {
+						"type": "string",
+						"description": "pet status in the store",
+						"enum": [
+							"available",
+							"pending",
+							"sold"
+						]
+					}
+				}
+			}
+		}
+	}
+}
