@@ -1,6 +1,7 @@
 import datetime
 import re
-from typing import Dict, List
+import uuid
+from typing import Dict
 
 RESERVED_WORDS = {"global", "cls", "self"}
 
@@ -12,6 +13,7 @@ types_mapping = {
         "date": datetime.date,
         "date-time": datetime.datetime,
         "binary": bytes,
+        "uuid": uuid.UUID,
     },
     "integer": {
         "": int,
