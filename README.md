@@ -60,7 +60,6 @@ The tool is already able to generate libraries but...
 - Authorization to access the API is not yet fully covered
 - There is not much to be configured here - it always works the same
 - There is no real documentation apart from this file
-- OpenAPI 3.x documents are not fully parsed / generated
 
 Please be forgiving and submit an issue, if you struggle with something or just contact us on our
 [Slack channel](https://robotframework.slack.com/archives/C035KMZ2FGA). It's more than welcome also to support us by
