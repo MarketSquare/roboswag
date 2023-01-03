@@ -191,7 +191,6 @@ def parse_swagger_specification(source, convert_to_3=False):
         recursion_limit=1,
         recursion_limit_handler=recursion_limit_handler,
     )
-    parser = ResolvingParser(source)
     swagger = parser.specification
     # convert to OpenAPI 3.x if swagger is in version 2.x
     if swagger.get("swagger") and convert_to_3:
