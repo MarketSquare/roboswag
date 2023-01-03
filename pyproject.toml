@@ -34,10 +34,10 @@ requests = "^2.27.1"
 urllib3 = "^1.26.9"
 black = "^22.3.0"
 Jinja2 = "^3.1.2"
-prance = "^0.21.8"
+prance = "^0.22.0"
 PyYAML = "^6.0"
 jsonschema = "^4.5.1"
-openapi-spec-validator = "^0.4.0"
+openapi-core = "^0.16.0"
 click = ">=8.1.0"
 rich_click = "^1.4"
 
@@ -53,8 +53,8 @@ furo = ">=2022.6.21"
 sphinx_design = "^0.2.0"
 coverage = "^6.4.3"
 pytest = "^7.1.2"
-fastapi = "^0.79.1"
-uvicorn = "^0.18.2"
+fastapi = "^0.88.0"
+uvicorn = "^0.20.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
