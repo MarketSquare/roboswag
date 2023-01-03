@@ -182,6 +182,15 @@ class APIModel:
 
 
 def parse_swagger_specification(source, convert_to_3=False):
+    def recursion_limit_handler(limit, refstring, recursions):
+        return {}
+
+    parser = ResolvingParser(
+        source,
+        backend="openapi-spec-validator",
+        recursion_limit=1,
+        recursion_limit_handler=recursion_limit_handler,
+    )
     parser = ResolvingParser(source)
     swagger = parser.specification
     # convert to OpenAPI 3.x if swagger is in version 2.x
