@@ -52,7 +52,7 @@ furo = ">=2022.6.21"
 sphinx_design = "^0.2.0"
 coverage = "^6.4.3"
 pytest = "^7.1.2"
-fastapi = "^0.79.1"
+fastapi = "^0.109.1"
 uvicorn = "^0.18.2"
 
 [build-system]
