@@ -63,6 +63,10 @@ class APIModel:
         # TODO handle files upload
         return self.send_request("POST", *args, **kwargs)
 
+    def patch(self, *args, **kwargs):
+        # TODO handle files upload
+        return self.send_request("PATCH", *args, **kwargs)
+
     def get(self, *args, **kwargs):
         return self.send_request("GET", *args, **kwargs)
 
